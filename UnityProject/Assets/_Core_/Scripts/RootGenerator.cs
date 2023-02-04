@@ -200,10 +200,12 @@ namespace GGJ23{
 
         void Update()
         {
+            /*
             foreach (var l in _lines)
             {
                 l.Draw(_worldScale);
             }
+            */
         }
     }
 

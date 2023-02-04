@@ -4,28 +4,33 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private CharacterController controller;
-    private Vector3 playerVelocity;
-    private bool groundedPlayer;
-    private float playerSpeed = 2.0f;
-    private float jumpHeight = 1.0f;
-    private float gravityValue = -9.81f;
+    private CharacterController _controller;
+    private Vector3 _playerVelocity;
+    private bool _groundedPlayer;
+    [SerializeField]
+    private float _playerSpeed = 2.0f;
+    [SerializeField]
+    private float _jumpForce = 7.5f;
+    [SerializeField]
+    float _terminalFallSpeed = 10.0f;
+    private Vector3 _gravity;
 
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
+        _gravity = Physics.gravity;
+        _controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
+        _groundedPlayer = _controller.isGrounded;
+        if (_groundedPlayer && _playerVelocity.y < 0)
         {
-            playerVelocity.y = 0f;
+            _playerVelocity.y = 0f;
         }
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        _controller.Move(move * Time.deltaTime * _playerSpeed);
 
         if (move != Vector3.zero)
         {
@@ -33,12 +38,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        if (Input.GetButtonDown("Jump") && _groundedPlayer)
         {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            _playerVelocity.y += _jumpForce;
         }
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+        _playerVelocity += _gravity * Time.deltaTime;
+
+        if (_playerVelocity.y < -_terminalFallSpeed)
+        {
+            _playerVelocity.y = -_terminalFallSpeed;
+            Debug.Log("Terminal vel");
+        }
+
+        _controller.Move(_playerVelocity * Time.deltaTime);
     }
 }

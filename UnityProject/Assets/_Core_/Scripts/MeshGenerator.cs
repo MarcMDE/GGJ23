@@ -196,7 +196,7 @@ public class MeshGenerator : MonoBehaviour {
         shader.SetBuffer (0, "points", pointsBuffer);
         shader.SetBuffer (0, "triangles", triangleBuffer);
         shader.SetInts ("dims", dims);
-        shader.SetFloat ("isoLevel", thmin*256);
+        shader.SetFloat ("isoLevel", thmin);
         shader.SetBool("interpolate", interpolate);
 
         shader.Dispatch (0, threadDims[0], threadDims[1], threadDims[2]);

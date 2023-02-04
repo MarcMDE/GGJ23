@@ -42,7 +42,7 @@ namespace GGJ23{
 
         void Start()
         {
-            GenMesh();
+            //GenMesh();
         }
 
         public MeshGenerator GetMeshGenerator()
@@ -400,12 +400,12 @@ namespace GGJ23{
 
         void Update()
         {
-            
+            /*
             foreach (var l in _lines)
             {
                 l.Draw(_worldScale);
             }
-            
+            */
         }
     }
 

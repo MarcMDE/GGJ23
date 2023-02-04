@@ -388,7 +388,7 @@ public class MeshGenerator : MonoBehaviour {
         bc.isTrigger = true;
         */
 
-        //OnMeshGenerated.Invoke();
+        OnMeshGenerated.Invoke();
 
         //transform.localScale = new Vector3( 1f/dims[2] , 1f/dims[1] , 1f/dims[0] );
         //transform.localPosition = - transform.parent.InverseTransformPoint(transform.TransformPoint(bc.center));

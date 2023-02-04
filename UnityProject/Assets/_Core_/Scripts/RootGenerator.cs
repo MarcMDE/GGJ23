@@ -36,9 +36,24 @@ namespace GGJ23{
 
         MeshGenerator _meshGenerator;
 
-        async void Start()
+        private void Awake()
         {
             _meshGenerator = GetComponent<MeshGenerator>();
+        }
+
+        void Start()
+        {
+            //GenMesh();
+        }
+
+        public MeshGenerator GetMeshGenerator()
+        {
+            return _meshGenerator;
+        }
+
+        public void GenMesh()
+        {
+
 
             _lines = new List<Line>();
             _connectionLines = new List<Line>();
@@ -46,45 +61,49 @@ namespace GGJ23{
             _matrix = new float[_matrixSize, _matrixSize, _matrixSize];
             _range = _matrixSize - _securityOffset * 2;
 
-            Vector3[,] _startingPoints = new Vector3[4,numStartPoints];
+            Vector3[,] _startingPoints = new Vector3[4, numStartPoints];
 
             Vector3 midPoint = Vector3.one * (_matrixSize / 2);
             Vector2 point;
-            
+
             int sides = _startingPoints.GetLength(0);
 
-            for(int i = 0; i < numStartPoints; i++){
-                point = GetRandomPoint();
-                _startingPoints[(int)CUBE_ORIENTATION.XN,i] = new Vector3(_securityOffset, point.y, point.x);
-                _connectionLines.Add( new Line(new Vector3(0,point.y,point.x), new Vector3(_securityOffset,point.y,point.x) ));
-            }
-            for(int i = 0; i < numStartPoints; i++){
-                point = GetRandomPoint();
-                _startingPoints[(int)CUBE_ORIENTATION.XP,i] = new Vector3(_matrixSize-1-_securityOffset, point.y, point.x);
-                _connectionLines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x), new Vector3(_matrixSize-1, point.y, point.x) ));
-            }
-            for(int i = 0; i < numStartPoints; i++){
-                point = GetRandomPoint();
-                _startingPoints[(int)CUBE_ORIENTATION.ZN,i] = new Vector3(point.x, point.y, _securityOffset);
-                _connectionLines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)) );
-            }
-            for(int i = 0; i < numStartPoints; i++){
-                point = GetRandomPoint(); 
-                _startingPoints[(int)CUBE_ORIENTATION.ZP,i] = new Vector3(point.x, point.y, _matrixSize-1-_securityOffset);
-                _connectionLines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)) );
-            }
-            
-            for (int i=0; i<sides; i++)
+            for (int i = 0; i < numStartPoints; i++)
             {
-                for (int j=0; j<numStartPoints; j++)
+                point = GetRandomPoint();
+                _startingPoints[(int)CUBE_ORIENTATION.XN, i] = new Vector3(_securityOffset, point.y, point.x);
+                _connectionLines.Add(new Line(new Vector3(0, point.y, point.x), new Vector3(_securityOffset, point.y, point.x)));
+            }
+            for (int i = 0; i < numStartPoints; i++)
+            {
+                point = GetRandomPoint();
+                _startingPoints[(int)CUBE_ORIENTATION.XP, i] = new Vector3(_matrixSize - 1 - _securityOffset, point.y, point.x);
+                _connectionLines.Add(new Line(new Vector3(_matrixSize - 1 - _securityOffset, point.y, point.x), new Vector3(_matrixSize - 1, point.y, point.x)));
+            }
+            for (int i = 0; i < numStartPoints; i++)
+            {
+                point = GetRandomPoint();
+                _startingPoints[(int)CUBE_ORIENTATION.ZN, i] = new Vector3(point.x, point.y, _securityOffset);
+                _connectionLines.Add(new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)));
+            }
+            for (int i = 0; i < numStartPoints; i++)
+            {
+                point = GetRandomPoint();
+                _startingPoints[(int)CUBE_ORIENTATION.ZP, i] = new Vector3(point.x, point.y, _matrixSize - 1 - _securityOffset);
+                _connectionLines.Add(new Line(new Vector3(point.x, point.y, _matrixSize - 1 - _securityOffset), new Vector3(point.x, point.y, _matrixSize - 1)));
+            }
+
+            for (int i = 0; i < sides; i++)
+            {
+                for (int j = 0; j < numStartPoints; j++)
                 {
-                    int r,r2;
-                    Vector3 currentPoint = _startingPoints[i,j];
+                    int r, r2;
+                    Vector3 currentPoint = _startingPoints[i, j];
                     do
                     {
                         r = Random.Range(0, sides);
                         r2 = Random.Range(0, numStartPoints);
-                    } while(currentPoint == _startingPoints[r,r2]);
+                    } while (currentPoint == _startingPoints[r, r2]);
 
                     Line l = new Line(_startingPoints[i, j], _startingPoints[r, r2]);
                     //_lines.Add(l);
@@ -109,25 +128,26 @@ namespace GGJ23{
             }
 
             List<Vector3> usedPoints = new List<Vector3>();
-            for (int i=0; i<2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 int r, r2;
-                do{
+                do
+                {
                     r = Random.Range(0, sides);
                     r2 = Random.Range(0, numStartPoints);
-                }while(usedPoints.Contains(_startingPoints[r,r2]));
+                } while (usedPoints.Contains(_startingPoints[r, r2]));
 
                 // Define interpolations
                 Line l = new Line(midPoint, _startingPoints[r, r2]);
-                Vector3 [] points = new Vector3[_rootSmoothIterations+1];
+                Vector3[] points = new Vector3[_rootSmoothIterations + 1];
                 points[0] = l.Start;
                 points[points.Length - 1] = l.End;
                 Vector3 prevPoint = l.Start;
-                for (int j=1; j<_rootSmoothIterations; j++)
+                for (int j = 1; j < _rootSmoothIterations; j++)
                 {
                     points[j] = l.GetPoint(((float)j) / _rootSmoothIterations) + new Vector3(
-                        Random.Range(-_randomness, _randomness), 
-                        Random.Range(-_randomness, _randomness), 
+                        Random.Range(-_randomness, _randomness),
+                        Random.Range(-_randomness, _randomness),
                         Random.Range(-_randomness, _randomness));
 
                     _lines.Add(new Line(prevPoint, points[j]));
@@ -137,7 +157,7 @@ namespace GGJ23{
                 _lines.Add(new Line(prevPoint, l.End));
 
 
-                usedPoints.Add(_startingPoints[r,r2]);
+                usedPoints.Add(_startingPoints[r, r2]);
             }
             //AddDensity(_startingPoints);
 

@@ -4,6 +4,7 @@ using Unity.Collections;
 using System.Threading;
 using System.Linq;
 using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 //Todo Shared Vertices
 //Todo Borders
@@ -15,6 +16,8 @@ public class MeshGenerator : MonoBehaviour {
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
+
+    public UnityAction OnMeshGenerated;
 
     /*private List<Vector3> vertices;
     private List<Vector2> uvs;
@@ -374,6 +377,7 @@ public class MeshGenerator : MonoBehaviour {
         meshRenderer.material = mat;
         transform.localPosition = Vector3.zero;
 
+        /*
         BoxCollider bc = gameObject.GetComponent<BoxCollider>();
 
         if (bc is not null)
@@ -382,7 +386,8 @@ public class MeshGenerator : MonoBehaviour {
         }
         bc = gameObject.AddComponent<BoxCollider>();
         bc.isTrigger = true;
-        
+        */
+        OnMeshGenerated.Invoke();
         //transform.localScale = new Vector3( 1f/dims[2] , 1f/dims[1] , 1f/dims[0] );
         //transform.localPosition = - transform.parent.InverseTransformPoint(transform.TransformPoint(bc.center));
         

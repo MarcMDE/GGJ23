@@ -59,8 +59,9 @@ namespace GGJ23{
 
             _lines = new List<Line>();
             _connectionLines = new List<Line>();
+            float sTime = Time.time;
 			SetChunk(new Dictionary<CUBE_ORIENTATION,List<Vector3>>(), _meshGenerator);
-
+            Debug.Log($"PTIME: {Time.time - sTime}");
 	    }
      
         public void SetChunk(Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints, MeshGenerator meshGenerator)
@@ -76,8 +77,8 @@ namespace GGJ23{
 
             Vector3 midPoint = Vector3.one * (_matrixSize / 2);
             Vector2 point;
-            
-            int sides = startingPoints.Count;
+
+            int sides = 4; //startingPoints.Count;
             ////////////////////////////////////////////////////////////////////////////////
             if(!startingPoints.ContainsKey(CUBE_ORIENTATION.XN)){
                 List<Vector3> pointList = new List<Vector3>();
@@ -171,10 +172,29 @@ namespace GGJ23{
                         r = Random.Range(0, sides);
                         r2 = Random.Range(0, numStartPoints);
                         currentVec = startingPoints[(CUBE_ORIENTATION)r][(int)Mathf.Min(r2,startingPoints[(CUBE_ORIENTATION)r].Count-1)];
-                    }while(currentPoint == currentVec);
-                    
-                    // TODO: noise
-                    _lines.Add(new Line(currentPoint, currentVec));
+                    }while(side.Key == (CUBE_ORIENTATION)r);
+
+                    Line l = new Line(currentPoint, currentVec);
+
+                    // NOISE -----------------
+                    Vector3[] points = new Vector3[_rootSmoothIterations + 1];
+                    points[0] = l.Start;
+                    points[points.Length - 1] = l.End;
+                    Vector3 prevPoint = l.Start;
+                    for (int k = 1; k < _rootSmoothIterations; k++)
+                    {
+                        points[k] = l.GetPoint(((float)k) / _rootSmoothIterations) + new Vector3(
+                            Random.Range(-_randomness, _randomness),
+                            Random.Range(-_randomness, _randomness),
+                            Random.Range(-_randomness, _randomness));
+
+                        _lines.Add(new Line(prevPoint, points[k]));
+                        prevPoint = points[k];
+                    }
+
+                    _lines.Add(new Line(prevPoint, l.End));
+                    // --------------------------
+
                     
                 }
             }
@@ -292,9 +312,28 @@ namespace GGJ23{
                     currentVec = startingPoints[(CUBE_ORIENTATION)r][(int)Mathf.Min(r2,startingPoints[(CUBE_ORIENTATION)r].Count-1)];
                 }while(usedPoints.Contains(currentVec));
 
-                // TODO: noise
+                
 
-                _lines.Add(new Line(midPoint, currentVec));
+                Line l = new Line(midPoint, currentVec);
+                // NOISE -----------------
+                Vector3[] points = new Vector3[_rootSmoothIterations + 1];
+                points[0] = l.Start;
+                points[points.Length - 1] = l.End;
+                Vector3 prevPoint = l.Start;
+                for (int k = 1; k < _rootSmoothIterations; k++)
+                {
+                    points[k] = l.GetPoint(((float)k) / _rootSmoothIterations) + new Vector3(
+                        Random.Range(-_randomness, _randomness),
+                        Random.Range(-_randomness, _randomness),
+                        Random.Range(-_randomness, _randomness));
+
+                    _lines.Add(new Line(prevPoint, points[k]));
+                    prevPoint = points[k];
+                }
+
+                _lines.Add(new Line(prevPoint, l.End));
+                // --------------------------
+
                 usedPoints.Add(currentVec);
             }
 
@@ -361,12 +400,12 @@ namespace GGJ23{
 
         void Update()
         {
-            /*
+            
             foreach (var l in _lines)
             {
                 l.Draw(_worldScale);
             }
-            */
+            
         }
     }
 

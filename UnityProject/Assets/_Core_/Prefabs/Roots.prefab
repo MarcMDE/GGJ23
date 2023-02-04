@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2157463186505685248}
   - component: {fileID: 2157463186505685255}
   - component: {fileID: 2157463186505685254}
+  - component: {fileID: 875438857}
+  - component: {fileID: 875438863}
   m_Layer: 0
   m_Name: Roots
   m_TagString: Untagged
@@ -47,14 +49,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96ccdd3d18ff324cb067c586cba4570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rootSmoothIterations: 10
-  _randomness: 1
+  _rootSmoothIterations: 15
+  _randomness: 1.3
   _securityOffset: 8
   _std: 2
   _worldScale: 0.5
   _matrixSize: 64
   _targetPopulation: 10
   numStartPoints: 1
+  _meshGenerator: {fileID: 2157463186505685254}
 --- !u!33 &2157463186505685248
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -118,9 +121,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 7200000, guid: 40941cc49dd514facab8bd3a8adc21c2, type: 3}
-  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 3}
+  mat: {fileID: 2100000, guid: 08fe607f74d210b4580a5177515117c5, type: 2}
   thmin: 0.3
   interpolate: 1
   shadeSmooth: 1
   closeBorders: 0
   clustersLeft: 1
+--- !u!114 &875438857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157463186505685252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37dd03edfbf09c4782431f206b3ad82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &875438863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157463186505685252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0594cc4397664744dbf9e14a13c17bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collectablePrefab: {fileID: 1868511913470027910, guid: 43659f736dee47149837d8e7f3703bef, type: 3}
+  _ground: {fileID: 0}
+  _n: 10

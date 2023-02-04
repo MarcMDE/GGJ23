@@ -59,7 +59,7 @@ namespace GGJ23{
 
         public void Draw(float scale)
         {
-            Debug.DrawLine(_start * scale, _end * scale, Random.ColorHSV());
+            Debug.DrawLine(_start * scale, _end * scale/*, Random.ColorHSV()*/);
         }
 
         public static Vector3 ProjectPointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd)

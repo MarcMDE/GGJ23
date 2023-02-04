@@ -8,6 +8,8 @@ namespace GGJ23{
         float? _magnitude;
         Vector3? _direction;
 
+        public Vector3 Start { get { return _start; } }
+        public Vector3 End { get { return _end; } }
         public Line(Vector3 start, Vector3 end)
         {
             _start = start;
@@ -50,9 +52,14 @@ namespace GGJ23{
             return point;
         }
 
+        public Vector3 GetPoint(float f)
+        {
+            return _start + Direction * Magnitude * f;
+        }
+
         public void Draw(float scale)
         {
-            Debug.DrawLine(_start * scale, _end * scale);
+            Debug.DrawLine(_start * scale, _end * scale, Random.ColorHSV());
         }
 
         public static Vector3 ProjectPointLine(Vector3 point, Vector3 lineStart, Vector3 lineEnd)

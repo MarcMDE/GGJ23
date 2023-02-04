@@ -6,6 +6,9 @@ public enum CUBE_ORIENTATION { XP=0, XN, ZP, ZN};
 namespace GGJ23{
     public class RootGenerator : MonoBehaviour
     {
+        [SerializeField] int _rootSmoothIterations = 4;
+
+        [SerializeField] float _randomness = 0.5f;
 
         [SerializeField]
         int _securityOffset = 2;
@@ -27,6 +30,7 @@ namespace GGJ23{
         float[,,] _matrix;
 
         List<Line> _lines;
+        List<Line> _connectionLines;
 
         int _range;
 
@@ -37,6 +41,8 @@ namespace GGJ23{
             _meshGenerator = GetComponent<MeshGenerator>();
 
             _lines = new List<Line>();
+            _connectionLines = new List<Line>();
+
             _matrix = new float[_matrixSize, _matrixSize, _matrixSize];
             _range = _matrixSize - _securityOffset * 2;
 
@@ -50,22 +56,22 @@ namespace GGJ23{
             for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint();
                 _startingPoints[(int)CUBE_ORIENTATION.XN,i] = new Vector3(_securityOffset, point.y, point.x);
-                _lines.Add( new Line(new Vector3(0,point.y,point.x), new Vector3(_securityOffset,point.y,point.x) ));
+                _connectionLines.Add( new Line(new Vector3(0,point.y,point.x), new Vector3(_securityOffset,point.y,point.x) ));
             }
             for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint();
                 _startingPoints[(int)CUBE_ORIENTATION.XP,i] = new Vector3(_matrixSize-1-_securityOffset, point.y, point.x);
-                _lines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x), new Vector3(_matrixSize-1, point.y, point.x) ));
+                _connectionLines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x), new Vector3(_matrixSize-1, point.y, point.x) ));
             }
             for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint();
-                _startingPoints[(int)CUBE_ORIENTATION.ZN,i] = new Vector3(point.x, point.y, _securityOffset); 
-                _lines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)) );
+                _startingPoints[(int)CUBE_ORIENTATION.ZN,i] = new Vector3(point.x, point.y, _securityOffset);
+                _connectionLines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)) );
             }
             for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint(); 
                 _startingPoints[(int)CUBE_ORIENTATION.ZP,i] = new Vector3(point.x, point.y, _matrixSize-1-_securityOffset);
-                _lines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)) );
+                _connectionLines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)) );
             }
             
             for (int i=0; i<sides; i++)
@@ -74,13 +80,31 @@ namespace GGJ23{
                 {
                     int r,r2;
                     Vector3 currentPoint = _startingPoints[i,j];
-                    do{
+                    do
+                    {
                         r = Random.Range(0, sides);
                         r2 = Random.Range(0, numStartPoints);
-                    }while(currentPoint == _startingPoints[r,r2]);
-                    
-                    _lines.Add(new Line(_startingPoints[i,j], _startingPoints[r,r2]));
-                    
+                    } while(currentPoint == _startingPoints[r,r2]);
+
+                    Line l = new Line(_startingPoints[i, j], _startingPoints[r, r2]);
+                    //_lines.Add(l);
+                    Vector3[] points = new Vector3[_rootSmoothIterations + 1];
+                    points[0] = l.Start;
+                    points[points.Length - 1] = l.End;
+                    Vector3 prevPoint = l.Start;
+                    for (int k = 1; k < _rootSmoothIterations; k++)
+                    {
+                        points[k] = l.GetPoint(((float)k) / _rootSmoothIterations) + new Vector3(
+                            Random.Range(-_randomness, _randomness),
+                            Random.Range(-_randomness, _randomness),
+                            Random.Range(-_randomness, _randomness));
+
+                        _lines.Add(new Line(prevPoint, points[k]));
+                        prevPoint = points[k];
+                    }
+
+                    _lines.Add(new Line(prevPoint, l.End));
+
                 }
             }
 
@@ -93,11 +117,28 @@ namespace GGJ23{
                     r2 = Random.Range(0, numStartPoints);
                 }while(usedPoints.Contains(_startingPoints[r,r2]));
 
-                _lines.Add(new Line(midPoint, _startingPoints[r,r2]));
+                // Define interpolations
+                Line l = new Line(midPoint, _startingPoints[r, r2]);
+                Vector3 [] points = new Vector3[_rootSmoothIterations+1];
+                points[0] = l.Start;
+                points[points.Length - 1] = l.End;
+                Vector3 prevPoint = l.Start;
+                for (int j=1; j<_rootSmoothIterations; j++)
+                {
+                    points[j] = l.GetPoint(((float)j) / _rootSmoothIterations) + new Vector3(
+                        Random.Range(-_randomness, _randomness), 
+                        Random.Range(-_randomness, _randomness), 
+                        Random.Range(-_randomness, _randomness));
+
+                    _lines.Add(new Line(prevPoint, points[j]));
+                    prevPoint = points[j];
+                }
+
+                _lines.Add(new Line(prevPoint, l.End));
+
+
                 usedPoints.Add(_startingPoints[r,r2]);
             }
-
-
             //AddDensity(_startingPoints);
 
             ComputeMatrix();
@@ -124,6 +165,11 @@ namespace GGJ23{
                     {
                         float minDist = float.MaxValue;
                         foreach (var l in _lines)
+                        {
+                            float lineDist = l.GetDistance(new Vector3(x, y, z));
+                            if (lineDist < minDist) minDist = lineDist;
+                        }
+                        foreach (var l in _connectionLines)
                         {
                             float lineDist = l.GetDistance(new Vector3(x, y, z));
                             if (lineDist < minDist) minDist = lineDist;

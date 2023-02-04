@@ -239,9 +239,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96ccdd3d18ff324cb067c586cba4570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rootSmoothIterations: 10
+  _randomness: 1
   _securityOffset: 8
   _std: 2
-  _worldScale: 0.1
+  _worldScale: 0.5
   _matrixSize: 64
   _targetPopulation: 10
   numStartPoints: 1

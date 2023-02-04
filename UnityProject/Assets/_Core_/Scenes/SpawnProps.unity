@@ -214,6 +214,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2157463186505685249, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
+      propertyPath: numStartPoints
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2157463186505685252, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
       propertyPath: m_Name
       value: Roots

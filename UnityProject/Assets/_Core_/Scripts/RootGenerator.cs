@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public enum CUBE_ORIENTATION { XP=0, XN, ZP, ZN};
 namespace GGJ23{
     public class RootGenerator : MonoBehaviour
@@ -27,82 +26,168 @@ namespace GGJ23{
         float[,,] _matrix;
 
         List<Line> _lines;
-
+        public MeshGenerator meshGenerator; 
         int _range;
-
-        MeshGenerator _meshGenerator;
-
-        async void Start()
+        public void SetOirigin(float[,,] matrix, MeshGenerator meshGenerator){
+            meshGenerator.LoadData(matrix);
+        }
+        void Start(){
+            SetChunk(new Dictionary<CUBE_ORIENTATION,List<Vector3>>(), meshGenerator);
+        }
+        public void SetChunk(Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints, MeshGenerator meshGenerator)
         {
-            _meshGenerator = GetComponent<MeshGenerator>();
-
             _lines = new List<Line>();
+            //Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints = pointsDict;
+
             _matrix = new float[_matrixSize, _matrixSize, _matrixSize];
             _range = _matrixSize - _securityOffset * 2;
 
-            Vector3[,] _startingPoints = new Vector3[4,numStartPoints];
+            //inpoints.GetLength(0) < 4 ? new Vector3[4,numStartPoints] : inpoints;
 
             Vector3 midPoint = Vector3.one * (_matrixSize / 2);
             Vector2 point;
             
-            int sides = _startingPoints.GetLength(0);
-
-            for(int i = 0; i < numStartPoints; i++){
+            int sides = startingPoints.Count;
+            ////////////////////////////////////////////////////////////////////////////////
+            if(!startingPoints.ContainsKey(CUBE_ORIENTATION.XN)){
+                List<Vector3> pointList = new List<Vector3>();
+                for(int i = 0; i < numStartPoints; i++){
+                    point = GetRandomPoint();
+                    pointList.Add(new Vector3(_securityOffset, point.y, point.x));
+                    _lines.Add( new Line(new Vector3(0,point.y,point.x), new Vector3(_securityOffset,point.y,point.x) ));
+                }
+                startingPoints.Add(CUBE_ORIENTATION.XN,pointList);
+            }else{
+                for(int i = 0; i < startingPoints[CUBE_ORIENTATION.XN].Count; i++){
+                    point = startingPoints[CUBE_ORIENTATION.XN][i];
+                    _lines.Add( new Line(new Vector3(0,point.y,point.x), new Vector3(_securityOffset,point.y,point.x) ));
+                }
+            }
+            ////////////////////////////////////////////////////////////////////////////////
+            if(!startingPoints.ContainsKey(CUBE_ORIENTATION.XP)){
+                List<Vector3> pointList = new List<Vector3>();
+                for(int i = 0; i < numStartPoints; i++){
+                    point = GetRandomPoint();
+                    pointList.Add(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x));
+                    _lines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x), new Vector3(_matrixSize-1, point.y, point.x) ) );
+                }
+                startingPoints.Add(CUBE_ORIENTATION.XP,pointList);
+            }else{
+                for(int i = 0; i < startingPoints[CUBE_ORIENTATION.XP].Count; i++){
+                    point = startingPoints[CUBE_ORIENTATION.XP][i];
+                    _lines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x), new Vector3(_matrixSize-1, point.y, point.x) ) );
+                }
+            }
+            ////////////////////////////////////////////////////////////////////////////////
+            if(!startingPoints.ContainsKey(CUBE_ORIENTATION.ZN)){
+                List<Vector3> pointList = new List<Vector3>();
+                for(int i = 0; i < numStartPoints; i++){
+                    point = GetRandomPoint();
+                    pointList.Add(new Vector3(point.x, point.y, _securityOffset));
+                    _lines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)));
+                }
+                startingPoints.Add(CUBE_ORIENTATION.ZN,pointList);
+            }else{
+                for(int i = 0; i < startingPoints[CUBE_ORIENTATION.ZN].Count; i++){
+                    point = startingPoints[CUBE_ORIENTATION.ZN][i];
+                    _lines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)));
+                }
+            }
+            ////////////////////////////////////////////////////////////////////////////////
+            if(!startingPoints.ContainsKey(CUBE_ORIENTATION.ZP)){
+                List<Vector3> pointList = new List<Vector3>();
+                for(int i = 0; i < numStartPoints; i++){
+                    point = GetRandomPoint();
+                    pointList.Add(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset));
+                    _lines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)));
+                }
+                startingPoints.Add(CUBE_ORIENTATION.ZP,pointList);
+            }else{
+                for(int i = 0; i < startingPoints[CUBE_ORIENTATION.ZP].Count; i++){
+                    point = startingPoints[CUBE_ORIENTATION.ZP][i];
+                    _lines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)));
+                }
+            }
+            ////////////////////////////////////////////////////////////////////////////////
+            
+            /*for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint();
-                _startingPoints[(int)CUBE_ORIENTATION.XN,i] = new Vector3(_securityOffset, point.y, point.x);
+                startingPoints[(int)CUBE_ORIENTATION.XN,i] = new Vector3(_securityOffset, point.y, point.x);
                 _lines.Add( new Line(new Vector3(0,point.y,point.x), new Vector3(_securityOffset,point.y,point.x) ));
             }
             for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint();
-                _startingPoints[(int)CUBE_ORIENTATION.XP,i] = new Vector3(_matrixSize-1-_securityOffset, point.y, point.x);
+                startingPoints[(int)CUBE_ORIENTATION.XP,i] = new Vector3(_matrixSize-1-_securityOffset, point.y, point.x);
                 _lines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x), new Vector3(_matrixSize-1, point.y, point.x) ));
             }
             for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint();
-                _startingPoints[(int)CUBE_ORIENTATION.ZN,i] = new Vector3(point.x, point.y, _securityOffset); 
+                startingPoints[(int)CUBE_ORIENTATION.ZN,i] = new Vector3(point.x, point.y, _securityOffset); 
                 _lines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)) );
             }
             for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint(); 
-                _startingPoints[(int)CUBE_ORIENTATION.ZP,i] = new Vector3(point.x, point.y, _matrixSize-1-_securityOffset);
+                startingPoints[(int)CUBE_ORIENTATION.ZP,i] = new Vector3(point.x, point.y, _matrixSize-1-_securityOffset);
                 _lines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)) );
-            }
+            }*/
             
-            for (int i=0; i<sides; i++)
+            foreach (KeyValuePair<CUBE_ORIENTATION,List<Vector3>> side in startingPoints)
+            {
+                foreach (var currentPoint in side.Value)
+                {
+                    int r,r2;
+                    Vector3 currentVec;
+                    do{
+                        r = Random.Range(0, sides);
+                        r2 = Random.Range(0, numStartPoints);
+                        currentVec = startingPoints[(CUBE_ORIENTATION)r][(int)Mathf.Min(r2,startingPoints[(CUBE_ORIENTATION)r].Count-1)];
+                    }while(currentPoint == currentVec);
+                    
+                    _lines.Add(new Line(currentPoint, currentVec));
+                    
+                }
+            }
+
+
+            /*for (int i=0; i<sides; i++)
             {
                 for (int j=0; j<numStartPoints; j++)
                 {
                     int r,r2;
-                    Vector3 currentPoint = _startingPoints[i,j];
+                    Vector3 currentPoint = startingPoints[i,j];
                     do{
                         r = Random.Range(0, sides);
                         r2 = Random.Range(0, numStartPoints);
-                    }while(currentPoint == _startingPoints[r,r2]);
+                    }while(currentPoint == startingPoints[r,r2]);
                     
-                    _lines.Add(new Line(_startingPoints[i,j], _startingPoints[r,r2]));
+                        _lines.Add(new Line(currentPoint, startingPoints[r][(int)Mathf.Min(r2,startingPoints[r].Count-1)]));
                     
                 }
-            }
+            }*/
 
             List<Vector3> usedPoints = new List<Vector3>();
             for (int i=0; i<2; i++)
             {
                 int r, r2;
+                Vector3 currentVec;
                 do{
                     r = Random.Range(0, sides);
                     r2 = Random.Range(0, numStartPoints);
-                }while(usedPoints.Contains(_startingPoints[r,r2]));
+                    currentVec = startingPoints[(CUBE_ORIENTATION)r][(int)Mathf.Min(r2,startingPoints[(CUBE_ORIENTATION)r].Count-1)];
+                }while(usedPoints.Contains(currentVec));
 
-                _lines.Add(new Line(midPoint, _startingPoints[r,r2]));
-                usedPoints.Add(_startingPoints[r,r2]);
+                _lines.Add(new Line(midPoint, currentVec));
+                usedPoints.Add(currentVec);
             }
 
 
-            //AddDensity(_startingPoints);
+            //AddDensity(startingPoints);
 
             ComputeMatrix();
 
-            _meshGenerator.LoadData(_matrix);
+            meshGenerator.LoadData(_matrix);
+
+            //return startingPoints;
         }
 
         void AddDensity(Vector3[] points)
@@ -136,7 +221,6 @@ namespace GGJ23{
                 }
             }
         }
-
         float Gaussian1D(float d)
         {
             float weight = 1 / (Mathf.Sqrt(2 * Mathf.PI) * Mathf.Exp(Mathf.Pow(d, 2) / (2 * Mathf.Pow(_std, 2))));

@@ -42,7 +42,7 @@ namespace GGJ23{
 
         void Start()
         {
-            GenMesh();
+            //GenMesh();
         }
 
         public MeshGenerator GetMeshGenerator()
@@ -57,15 +57,16 @@ namespace GGJ23{
         public void GenMesh()
         {
 
-            _lines = new List<Line>();
-            _connectionLines = new List<Line>();
-            float sTime = Time.time;
+            
+            /*float sTime = Time.time;
 			SetChunk(new Dictionary<CUBE_ORIENTATION,List<Vector3>>(), _meshGenerator);
-            Debug.Log($"PTIME: {Time.time - sTime}");
+            Debug.Log($"PTIME: {Time.time - sTime}");*/
 	    }
      
         public void SetChunk(Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints, MeshGenerator meshGenerator)
-        {
+        {   
+            _lines = new List<Line>();
+            _connectionLines = new List<Line>();
             //Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints = pointsDict;
 
             _matrix = new float[_matrixSize, _matrixSize, _matrixSize];
@@ -90,8 +91,8 @@ namespace GGJ23{
                 startingPoints.Add(CUBE_ORIENTATION.XN,pointList);
             }else{
                 for(int i = 0; i < startingPoints[CUBE_ORIENTATION.XN].Count; i++){
-                    point = startingPoints[CUBE_ORIENTATION.XN][i];
-                    _connectionLines.Add( new Line(new Vector3(0,point.y,point.x), new Vector3(_securityOffset,point.y,point.x) ));
+                    Vector3 point3 = startingPoints[CUBE_ORIENTATION.XN][i];
+                    _connectionLines.Add( new Line(new Vector3(0,point3.y,point3.z), new Vector3(_securityOffset,point3.y,point3.z) ));
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
@@ -105,8 +106,8 @@ namespace GGJ23{
                 startingPoints.Add(CUBE_ORIENTATION.XP,pointList);
             }else{
                 for(int i = 0; i < startingPoints[CUBE_ORIENTATION.XP].Count; i++){
-                    point = startingPoints[CUBE_ORIENTATION.XP][i];
-                    _connectionLines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x), new Vector3(_matrixSize-1, point.y, point.x) ) );
+                    Vector3 point3 = startingPoints[CUBE_ORIENTATION.XP][i];
+                    _connectionLines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point3.y, point3.z), new Vector3(_matrixSize-1, point3.y, point3.z) ) );
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
@@ -120,8 +121,8 @@ namespace GGJ23{
                 startingPoints.Add(CUBE_ORIENTATION.ZN,pointList);
             }else{
                 for(int i = 0; i < startingPoints[CUBE_ORIENTATION.ZN].Count; i++){
-                    point = startingPoints[CUBE_ORIENTATION.ZN][i];
-                    _connectionLines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)));
+                    Vector3 point3 = startingPoints[CUBE_ORIENTATION.ZN][i];
+                    _connectionLines.Add( new Line(new Vector3(point3.x, point3.y, 0), new Vector3(point3.x, point3.y, _securityOffset)));
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
@@ -135,8 +136,8 @@ namespace GGJ23{
                 startingPoints.Add(CUBE_ORIENTATION.ZP,pointList);
             }else{
                 for(int i = 0; i < startingPoints[CUBE_ORIENTATION.ZP].Count; i++){
-                    point = startingPoints[CUBE_ORIENTATION.ZP][i];
-                    _connectionLines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)));
+                    Vector3 point3 = startingPoints[CUBE_ORIENTATION.ZP][i];
+                    _connectionLines.Add( new Line(new Vector3(point3.x, point3.y, _matrixSize-1-_securityOffset), new Vector3(point3.x, point3.y, _matrixSize-1)));
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
@@ -398,7 +399,7 @@ namespace GGJ23{
             return new Vector2(x, y);
         }
 
-        void Update()
+        /*void Update()
         {
             
             foreach (var l in _lines)
@@ -406,7 +407,7 @@ namespace GGJ23{
                 l.Draw(_worldScale);
             }
             
-        }
+        }*/
     }
 
 }

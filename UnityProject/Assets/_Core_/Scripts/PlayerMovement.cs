@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpForce = 7.5f;
     [SerializeField]
     float _terminalFallSpeed = 10.0f;
+    [SerializeField]
+    float _airSpeedFactor = 1.5f;
 
     private CharacterController _controller;
     private Vector3 _playerVelocity;
@@ -26,46 +28,55 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.forward, Color.red);
+        //Debug.DrawRay(transform.position, transform.forward, Color.red);
 
-        _groundedPlayer = _controller.isGrounded;
-        if (_groundedPlayer && _playerVelocity.y < 0)
+        if (_controller.isGrounded)
         {
-            _playerVelocity.y = 0f;
+            // Ensure grounded
+            _playerVelocity.y = -_controller.stepOffset / Time.deltaTime;
+        }
+        else
+        {
+            // Apply gravity
+            _playerVelocity += _gravity * Time.deltaTime;
+            
+            // Terminal falling velocity
+            if (_playerVelocity.y < -_terminalFallSpeed)
+            {
+                _playerVelocity.y = -_terminalFallSpeed;
+                //Debug.Log("Terminal vel");
+            }
         }
 
-        //Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        // Apply gravity
+        _controller.Move(_playerVelocity * Time.deltaTime);
+
+        // Jump
+        if (Input.GetButtonDown("Jump") && _controller.isGrounded)
+        {
+            //_playerVelocity.y += _jumpForce;
+            _playerVelocity.y = _jumpForce;
+            _controller.Move(_playerVelocity * Time.deltaTime);
+        }
+
+        // Character movement (X,Z) ----------------
         float forward = Input.GetAxis("Vertical");
         float side = Input.GetAxis("Horizontal");
 
+        Vector3 planeVelocity = (_cameraController.transform.forward * forward + _cameraController.transform.right * side) * _playerSpeed;
+        planeVelocity.y = 0;
 
-        _controller.Move((_cameraController.transform.forward * forward + _cameraController.transform.right * side) * Time.deltaTime * _playerSpeed);
+        // Extra speed on air
+        if (!_controller.isGrounded)
+            planeVelocity *= _airSpeedFactor;
 
-        // ROTATION
-        /*
-        if (move != Vector3.zero)
-        {
-            gameObject.transform.forward = move;
-        }
-        */
+        _controller.Move(planeVelocity * Time.deltaTime);
+        // ----------------------------------------
+
+        // Character rotation
         transform.forward = new Vector3(_cameraController.transform.forward.x, 0, _cameraController.transform.forward.z);
 
-        // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && _groundedPlayer)
-        {
-            _playerVelocity.y += _jumpForce;
-        }
-
-        _playerVelocity += _gravity * Time.deltaTime;
-
-        if (_playerVelocity.y < -_terminalFallSpeed)
-        {
-            _playerVelocity.y = -_terminalFallSpeed;
-            Debug.Log("Terminal vel");
-        }
-
-        _controller.Move(_playerVelocity * Time.deltaTime);
-
+        // Set camera position
         _cameraController.TargetPosition = transform.position;
     }
 }

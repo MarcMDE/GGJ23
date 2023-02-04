@@ -46,7 +46,7 @@ public class Line
 
     public Vector3 GetRandomPoint()
     {
-        float r = Random.Range(0, 1) * Magnitude;
+        float r = Random.Range(0.2f, 0.8f) * Magnitude;
         Vector3 point = _start + Direction * r;
 
         return point;
@@ -120,9 +120,21 @@ public class RootGenerator : MonoBehaviour
             _lines.Add(new Line(midPoint, _startingPoints[Random.Range(0, _startingPoints.Length)]));
         }
 
+
+        AddDensity(_startingPoints);
+
         ComputeMatrix();
 
-        _meshGenerator.LoadData(_matrix);
+        //_meshGenerator.LoadData(_matrix);
+    }
+
+    void AddDensity(Vector3 [] points)
+    {
+        foreach (var l in _lines)
+        {
+            Vector3 newPoint = l.GetRandomPoint();
+            _lines.Add(new Line(newPoint, points[Random.Range(0, points.Length)]));
+        }
     }
 
     void ComputeMatrix()

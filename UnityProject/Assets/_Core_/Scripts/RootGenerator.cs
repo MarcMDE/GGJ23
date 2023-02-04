@@ -72,11 +72,12 @@ namespace GGJ23{
             {
                 for (int j=0; j<numStartPoints; j++)
                 {
-                    int r, r2;
+                    int r,r2;
+                    Vector3 currentPoint = _startingPoints[i,j];
                     do{
                         r = Random.Range(0, sides);
                         r2 = Random.Range(0, numStartPoints);
-                    }while(r == i || r2 == j );
+                    }while(currentPoint == _startingPoints[r,r2]);
                     
                     _lines.Add(new Line(_startingPoints[i,j], _startingPoints[r,r2]));
                     

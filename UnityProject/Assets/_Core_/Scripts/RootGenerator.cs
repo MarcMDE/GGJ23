@@ -86,8 +86,12 @@ public class RootGenerator : MonoBehaviour
 
     int _range;
 
+    MeshGenerator _meshGenerator;
+
     void Start()
     {
+        _meshGenerator = GetComponent<MeshGenerator>();
+
         _lines = new List<Line>();
         _matrix = new float[_matrixSize, _matrixSize, _matrixSize];
         _range = _matrixSize - _securityOffset * 2;
@@ -117,6 +121,8 @@ public class RootGenerator : MonoBehaviour
         }
 
         ComputeMatrix();
+
+        _meshGenerator.LoadData(_matrix);
     }
 
     void ComputeMatrix()

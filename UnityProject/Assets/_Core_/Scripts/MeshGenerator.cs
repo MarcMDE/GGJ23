@@ -109,7 +109,7 @@ public class MeshGenerator : MonoBehaviour {
 
         data = indata;
 
-        for(int i = 0; i<dims.Length; i++){
+        for(int i = 0; i<3; i++){
             dims[i] = data.GetLength(i);
             voxelDims[i] = dims[i] - 1;
             threadDims[i] = Mathf.CeilToInt (voxelDims[i] / (float) threadGroupSize);
@@ -381,8 +381,8 @@ public class MeshGenerator : MonoBehaviour {
         bc = gameObject.AddComponent<BoxCollider>();
         bc.isTrigger = true;
         
-        transform.parent.localScale = new Vector3( 1f/dims[2] , 1f/dims[1] , 1f/dims[0] );
-        transform.localPosition = - transform.parent.InverseTransformPoint(transform.TransformPoint(bc.center));
+        //transform.localScale = new Vector3( 1f/dims[2] , 1f/dims[1] , 1f/dims[0] );
+        //transform.localPosition = - transform.parent.InverseTransformPoint(transform.TransformPoint(bc.center));
         
     }
     private void PrintTimes(){

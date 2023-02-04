@@ -13,6 +13,7 @@ using UnityEngine.Serialization;
 public class MeshGenerator : MonoBehaviour {
 
     private MeshFilter meshFilter;
+    private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
 
     /*private List<Vector3> vertices;
@@ -82,6 +83,7 @@ public class MeshGenerator : MonoBehaviour {
 		};
         meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
+        meshRenderer = GetComponent<MeshRenderer>();
     
     }
 
@@ -196,7 +198,7 @@ public class MeshGenerator : MonoBehaviour {
         shader.SetBuffer (0, "points", pointsBuffer);
         shader.SetBuffer (0, "triangles", triangleBuffer);
         shader.SetInts ("dims", dims);
-        shader.SetFloat ("isoLevel", thmin*256);
+        shader.SetFloat ("isoLevel", thmin);
         shader.SetBool("interpolate", interpolate);
 
         shader.Dispatch (0, threadDims[0], threadDims[1], threadDims[2]);
@@ -369,7 +371,7 @@ public class MeshGenerator : MonoBehaviour {
         mesh.Optimize ();
         mesh.RecalculateNormals ();
         
-        
+        meshRenderer.material = mat;
         transform.localPosition = Vector3.zero;
 
         BoxCollider bc = gameObject.GetComponent<BoxCollider>();

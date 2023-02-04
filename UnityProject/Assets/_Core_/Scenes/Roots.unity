@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 384386243}
   - component: {fileID: 384386242}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Roots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 7200000, guid: 40941cc49dd514facab8bd3a8adc21c2, type: 3}
-  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
-  thmin: 0.1
+  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 3}
+  thmin: 0.3
   interpolate: 1
   shadeSmooth: 1
   closeBorders: 0
@@ -239,10 +239,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96ccdd3d18ff324cb067c586cba4570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _securityOffset: 8
   _std: 2
   _worldScale: 0.1
-  _matrixSize: 16
+  _matrixSize: 64
   _targetPopulation: 10
+  numStartPoints: 1
 --- !u!1 &753973233
 GameObject:
   m_ObjectHideFlags: 0

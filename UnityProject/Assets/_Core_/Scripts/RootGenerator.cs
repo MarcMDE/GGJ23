@@ -332,9 +332,9 @@ namespace GGJ23{
                 for (int k = 1; k < _rootSmoothIterations; k++)
                 {
                     points[k] = l.GetPoint(((float)k) / _rootSmoothIterations) + new Vector3(
-                        Random.Range(-_randomness, _randomness),
-                        Random.Range(-_randomness, _randomness),
-                        Random.Range(-_randomness, _randomness));
+                        Random.Range(-_randomness * ((float)k / _rootSmoothIterations), _randomness * ((float)k / _rootSmoothIterations)),
+                        Random.Range(-_randomness * ((float)k / _rootSmoothIterations), _randomness * ((float)k / _rootSmoothIterations)),
+                        Random.Range(-_randomness * ((float)k / _rootSmoothIterations), _randomness * ((float)k / _rootSmoothIterations)));
 
                     _lines.Add(new Line(prevPoint, points[k]));
                     prevPoint = points[k];

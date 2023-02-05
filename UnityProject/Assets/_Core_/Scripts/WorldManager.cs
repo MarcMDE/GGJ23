@@ -18,6 +18,12 @@ namespace GGJ23
         GameObject[] _propsSpring;
 
         [SerializeField]
+        GameObject _calderoParent;
+
+        CalderoBehaviour _caldero;
+        CalderoApagadoBehaviour[] _calderosApagados;
+
+        [SerializeField]
         GameObject[] _collectables = new GameObject[3];
 
         GameObject[][] _props = new GameObject[3][];
@@ -35,8 +41,23 @@ namespace GGJ23
             return _generateChunkLoop.Meshes[0, 0, 0].transform.position + Vector3.one * _generateChunkLoop.ChunkSize * 0.5f;
         }
 
+        public Vector3 GetPosition(GameObject m)
+        {
+            return m.transform.position + Vector3.one * _generateChunkLoop.ChunkSize * 0.5f;
+
+        }
+
         void Start()
         {
+            _caldero = _calderoParent.GetComponentInChildren<CalderoBehaviour>();
+            _calderosApagados = _calderoParent.GetComponentsInChildren<CalderoApagadoBehaviour>();
+
+            _caldero.gameObject.SetActive(false);
+            for (int i=0; i<_calderosApagados.Length; i++)
+            {
+                _calderosApagados[i].gameObject.SetActive(false);
+            }
+
             _generateChunkLoop = GetComponent<GenerateChunkLoop>();
             _colorRoots = GetComponent<ColorRoots>();
             _propsSpawner = GetComponent<PropsSpawner>();
@@ -76,12 +97,35 @@ namespace GGJ23
                     {
                         _propsSpawner.Spawn(m, _nProps, p);
                     }
+
+                    
                     
                     // TODO: Spawn roots under (and paint :/)
     
                 }
             i++;            
             }
+
+            
+            int k = 0;
+            foreach(var m in meshes)
+            {
+                if (k>0)
+                {
+                    _calderosApagados[k-1].transform.parent = m.transform;
+                    _calderosApagados[k-1].gameObject.SetActive(true);
+                    //_caldero.Restart();
+                    _calderosApagados[k-1].transform.position = GetPosition(m) + Vector3.up * 1.75f;
+                }
+                k++;
+            }
+            
+
+            // Set caldero loco
+            _caldero.transform.parent = meshes[0, 0, 0].transform;
+            _caldero.gameObject.SetActive(true);
+            _caldero.Restart();
+            _caldero.transform.position = GetInitialPosition() + Vector3.up * 1.75f;
 
             OnWorldReady.Invoke();
 

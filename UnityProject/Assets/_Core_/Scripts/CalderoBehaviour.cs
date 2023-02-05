@@ -80,7 +80,7 @@ public class CalderoBehaviour : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.E))
         {
             var p = other.GetComponent<PlayerController>();
 

@@ -48,8 +48,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a81004ef95f99e489e02337445daf9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boundsBlendRange: 0.1
+  _boundsBlendRange: 0.2
   _blendRange: 0.2
+  _colors:
+  - {r: 0.6603774, g: 0.285688, b: 0.15886435, a: 0}
+  - {r: 0.6391955, g: 0.7062904, b: 0.7169812, a: 0}
+  - {r: 0.23487006, g: 0.5471698, b: 0.31903046, a: 0}
+  - {r: 0.509434, g: 0.37558496, b: 0.26192597, a: 0}
 --- !u!114 &2217238864670905088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +126,7 @@ MonoBehaviour:
   _propsSpring:
   - {fileID: 8525445553473799425, guid: 59dd75c61f3957947b21328219830cbf, type: 3}
   - {fileID: 858053051283026711, guid: 00c7709397edede4497db1616fbc84f7, type: 3}
+  _calderoParent: {fileID: 0}
   _collectables:
   - {fileID: 6837215729985843562, guid: aa3150fcfdf67ad49a14f790858efc46, type: 3}
   - {fileID: 8077281963624919169, guid: 1b38c9f4266a9f9469fdcc84611ce3e3, type: 3}

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - bullet
+  - col
+  - on
+  - off
   layers:
   - Default
   - TransparentFX
@@ -15,7 +18,7 @@ TagManager:
   - Collectable
   - Player
   - groundMask
-  - 
+  - Cacerola
   - 
   - 
   - 

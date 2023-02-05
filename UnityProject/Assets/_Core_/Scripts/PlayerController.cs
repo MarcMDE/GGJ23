@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 { 
     const int _maxCollectables = 10;
     int _nCollectables;
-    CollectableTypes _collectableGathered;
+    Environments _collectableGathered;
     CollectableBehaviour _currentCollidingCollectable;
 
     public UnityAction OnCollectableRangeEnter;
@@ -16,17 +16,17 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _nCollectables = 0;
-        _collectableGathered = CollectableTypes.NONE;
+        _collectableGathered = Environments.NONE;
         _currentCollidingCollectable = null;
     }
 
     public void ResetGatheredCollectables()
     {
         _nCollectables = 0;
-        _collectableGathered = CollectableTypes.NONE;
+        _collectableGathered = Environments.NONE;
     }
 
-    void GatherCollectable(CollectableTypes c)
+    void GatherCollectable(Environments c)
     {
         if (c != _collectableGathered)
         {

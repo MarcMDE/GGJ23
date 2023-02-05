@@ -32,8 +32,8 @@ namespace GGJ23{
         List<Line> _connectionLines;
 
         int _range;
-		[SerializeField]
-        MeshGenerator _meshGenerator;
+		//[SerializeField]
+        //MeshGenerator _meshGenerator;
 
         private System.DateTime RootGenStarts;
         private System.DateTime RootGenEnds;
@@ -48,11 +48,12 @@ namespace GGJ23{
             //GenMesh();
         }
 
+        /*
         public MeshGenerator GetMeshGenerator()
         {
             return _meshGenerator;
         }
-
+        */
         public void SetOirigin(float[,,] matrix, MeshGenerator meshGenerator){
             meshGenerator.LoadData(matrix);
         }

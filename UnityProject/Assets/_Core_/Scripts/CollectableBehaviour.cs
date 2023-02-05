@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CollectableTypes { NEUTRAL=0, AIR, BLOCKED, NONE };
-
 public class CollectableBehaviour : MonoBehaviour
 {
     [SerializeField]
-    CollectableTypes _type;
+    Environments _type;
 
-    public CollectableTypes Type { get { return _type; }}
+    public Environments Type { get { return _type; }}
 
     void Start()
     {

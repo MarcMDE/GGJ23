@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 7200000, guid: 40941cc49dd514facab8bd3a8adc21c2, type: 3}
-  mat: {fileID: 2100000, guid: 08fe607f74d210b4580a5177515117c5, type: 2}
+  mat: {fileID: 2100000, guid: 9a7829a45eaab3848b3efec7493cc909, type: 2}
   thmin: 0.3
   interpolate: 1
   shadeSmooth: 1

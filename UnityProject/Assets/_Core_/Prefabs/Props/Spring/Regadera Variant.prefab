@@ -57,7 +57,23 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 10517fd9442ee584a82a1b23c5b7eea8, type: 2}
     - target: {fileID: 919132149155446097, guid: b38fa9834f6ff914091d1554f55edeea, type: 3}
       propertyPath: m_Name
-      value: Regadera
+      value: Regadera Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: b38fa9834f6ff914091d1554f55edeea, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: b38fa9834f6ff914091d1554f55edeea, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: b38fa9834f6ff914091d1554f55edeea, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: b38fa9834f6ff914091d1554f55edeea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.71
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b38fa9834f6ff914091d1554f55edeea, type: 3}

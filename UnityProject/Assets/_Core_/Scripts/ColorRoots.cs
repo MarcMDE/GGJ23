@@ -13,27 +13,12 @@ public class ColorRoots : MonoBehaviour
     const int _nEnvironments = 4;
     Color[] _colors = new Color[_nEnvironments];
 
-    [SerializeField]
-    RootGenerator _rootGenerator;
-
-    [SerializeField]
-    GameObject _object;
-
     void Start()
     {
         _colors[(int)Environments.AUTUM] = Color.red;
         _colors[(int)Environments.WINTER] = Color.white;
         _colors[(int)Environments.SPRING] = Color.green;
         _colors[(int)Environments.NONE] = Color.black;
-
-        _rootGenerator.GetMeshGenerator().OnMeshGenerated += PaintRoot;
-        _rootGenerator.GenMesh();
-    }
-
-    private void PaintRoot()
-    {
-        Paint(0.5f, 0.5f, Environments.AUTUM, Environments.SPRING);
-
     }
 
     private float Scale(float value, float min, float max, float minScale, float maxScale)
@@ -42,9 +27,9 @@ public class ColorRoots : MonoBehaviour
         return scaled;
     }
 
-    public void Paint(float f1, float f2, Environments e1, Environments e2)
+    public void Paint(float f1, float f2, Environments e1, Environments e2, GameObject obj)
     {
-        Mesh mesh = _object.GetComponent<MeshFilter>().mesh;
+        Mesh mesh = obj.GetComponent<MeshFilter>().mesh;
         Vector3[] vertices = mesh.vertices;
 
         Color[] colors = new Color[vertices.Length];
@@ -117,10 +102,5 @@ public class ColorRoots : MonoBehaviour
 
             // assign the array of colors to the Mesh.
         mesh.colors = colors;
-    }
-
-    void Update()
-    {
-        
     }
 }

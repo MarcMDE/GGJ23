@@ -4,28 +4,17 @@ using UnityEngine;
 
 public class PropsSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject _collectablePrefab;
-    [SerializeField] GameObject _ground;
-    [SerializeField] int _n;
-
-    Vector3[] _spawnIndices;
-
+    const float _dotThreshold = 0.35f;
     void Start()
     {
         //Spawn();
     }
 
-    public void SetGround(GameObject ground)
+    public void Spawn(GameObject ground, int n, GameObject prefab)
     {
-        _ground = ground;
-    }
+        Mesh groundMesh = ground.GetComponent<MeshFilter>().mesh;
 
-    public void Spawn()
-    {
-        Mesh groundMesh = _ground.GetComponent<MeshFilter>().mesh;
-        _spawnIndices = new Vector3[_n];
-
-        for (int i = 0; i < _n; i++)
+        for (int i = 0; i < n; i++)
         {
             int vIndex;
             Vector3 spawnPos;
@@ -34,11 +23,11 @@ public class PropsSpawner : MonoBehaviour
             do
             {
                 vIndex = Random.Range(0, groundMesh.vertices.Length);
-                spawnPos = groundMesh.vertices[vIndex];
+                spawnPos = groundMesh.vertices[vIndex] + ground.transform.position;
                 spawnNormal = groundMesh.normals[vIndex];
-            } while (Vector3.Dot(spawnNormal, Vector3.up) < 0.1f);
+            } while (Vector3.Dot(spawnNormal, Vector3.up) < _dotThreshold);
 
-            Instantiate(_collectablePrefab, spawnPos, Quaternion.LookRotation(Vector3.Cross(spawnNormal, Vector3.right), spawnNormal), transform);
+            Instantiate(prefab, spawnPos, Quaternion.LookRotation(Vector3.Cross(spawnNormal, Vector3.right), spawnNormal), ground.transform);
         }
     }
 

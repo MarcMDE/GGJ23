@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 public enum CARDINALS { FORWARD, BACKWARD, LEFT, RIGHT, UP, DOWN};
 namespace GGJ23{
     public class GenerateChunkLoop : MonoBehaviour
@@ -14,7 +15,13 @@ namespace GGJ23{
         RootGenerator rootGenerator;
         GameObject[,,] meshes = new GameObject[2,2,2];
 
-        new Dictionary<CUBE_ORIENTATION,List<Vector3>>[,,] startPointsDictArray = new Dictionary<CUBE_ORIENTATION,List<Vector3>>[2,2,2];
+        bool _meshesReady;
+        int _numMeshes;
+        int _targetMeshes;
+
+        public UnityAction OnMeshesReady;
+
+        Dictionary<CUBE_ORIENTATION,List<Vector3>>[,,] startPointsDictArray = new Dictionary<CUBE_ORIENTATION,List<Vector3>>[2,2,2];
     
         int[] currentDicIndex = new int[3];
 
@@ -25,9 +32,30 @@ namespace GGJ23{
 
         //private Dictionary<CUBE_ORIENTATION,List<Vector3>> _startingPoints = new Dictionary<CUBE_ORIENTATION,List<Vector3>>();
 
-        void Start()
+        public GameObject[,,] Meshes { get { return meshes; } }
+
+
+        void Awake()
         {
+            _targetMeshes = meshes.GetLength(0) * meshes.GetLength(1) * meshes.GetLength(2);
             rootGenerator = GetComponent<RootGenerator>();
+        }
+
+
+        void MeshLoaded()
+        {
+            _numMeshes++;
+            if (_numMeshes >= _targetMeshes)
+            {
+                _meshesReady = true;
+                OnMeshesReady.Invoke();
+            }
+        }
+
+        public void Generate()
+        {
+            _meshesReady = false;
+            _numMeshes = 0;
             ResetChunks( new Dictionary<CUBE_ORIENTATION,List<Vector3>>());
         }
 
@@ -68,7 +96,8 @@ namespace GGJ23{
                                 obj.transform.position = meshes[0,0,0].transform.position + new Vector3(x*(chunkSize-1),y*(chunkSize-1),z*(chunkSize-1));
                                 meshes[x,y,z] = obj;
                             }
-                        }                        
+                        }
+                        meshes[x, y, z].GetComponent<MeshGenerator>().OnMeshGenerated += MeshLoaded;
                     }
                 }
             }

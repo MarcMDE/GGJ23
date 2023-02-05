@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1633614358871184477, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: _terminalFallSpeed
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8158653402744603368, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: m_RootOrder
@@ -184,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8158653402982854131, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: numStartPoints
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}

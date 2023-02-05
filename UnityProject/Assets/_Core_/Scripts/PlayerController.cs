@@ -10,8 +10,18 @@ public class PlayerController : MonoBehaviour
     Environments _collectableGathered;
     CollectableBehaviour _currentCollidingCollectable;
 
-    //public UnityAction OnCollectableRangeEnter;
-    //public UnityAction OnCollectableRangeExit;
+
+    public UnityAction OnCollectableRangeEnter;
+    public UnityAction OnCollectableRangeExit;
+    public int GetCollectedNum()
+    {
+        return _nCollectables;
+    }
+
+    public Environments GetCurrentCollectable()
+    {
+        return _collectableGathered;
+    }
 
     private void Start()
     {
@@ -26,18 +36,25 @@ public class PlayerController : MonoBehaviour
         _collectableGathered = Environments.NONE;
     }
 
-    void GatherCollectable(Environments c)
+    void GatherCollectable()
     {
-        if (c != _collectableGathered)
+        if (_currentCollidingCollectable.Type != _collectableGathered)
         {
             _nCollectables = 0;
-            _collectableGathered = c;
+            _collectableGathered = _currentCollidingCollectable.Type;
         }
+
+        _currentCollidingCollectable.Gather();
+        _currentCollidingCollectable = null;
 
         _nCollectables += 1;
 
         if (_nCollectables > _maxCollectables)
             _nCollectables = _maxCollectables;
+
+        OnCollectableRangeExit.Invoke();
+
+
     }
 
     public bool IsInGatheringRange()
@@ -47,13 +64,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (_currentCollidingCollectable != null && Input.GetKey(KeyCode.E))
+        if (_currentCollidingCollectable is not null && Input.GetKeyDown(KeyCode.E))
         {
             // Gather collectable
-            GatherCollectable(_currentCollidingCollectable.Type);
-            _currentCollidingCollectable.Gather();
+            GatherCollectable();
 
-            //OnCollectableRangeExit.Invoke();
         }
     }
 
@@ -63,7 +78,7 @@ public class PlayerController : MonoBehaviour
         // Show message
         // enable gathering
         _currentCollidingCollectable = c;
-        //OnCollectableRangeEnter.Invoke();
+        OnCollectableRangeEnter.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
@@ -72,8 +87,8 @@ public class PlayerController : MonoBehaviour
 
         if (c == _currentCollidingCollectable)
         {
-            c = null;
-            //OnCollectableRangeExit.Invoke();
+            _currentCollidingCollectable = null;
+            OnCollectableRangeExit.Invoke();
         }
     }
 

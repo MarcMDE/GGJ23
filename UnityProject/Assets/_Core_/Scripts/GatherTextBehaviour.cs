@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class GatherTextBehaviour : MonoBehaviour
 {
+    [SerializeField]
     PlayerController _playerController;
     void Start()
     {
-        //_playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-
+        _playerController.OnCollectableRangeEnter += Show;
+        _playerController.OnCollectableRangeExit += Hide;
         gameObject.SetActive(false);
-
-        //_playerController.OnCollectableRangeEnter += Show;
-        //_playerController.OnCollectableRangeExit += Hide;
     }
 
     void Hide()

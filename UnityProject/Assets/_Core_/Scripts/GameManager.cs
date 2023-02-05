@@ -12,6 +12,9 @@ namespace GGJ23
         [SerializeField]
         WorldManager _worldManager;
 
+        [SerializeField]
+        GenerateChunkLoop chunkGen ;
+
         void Start()
         {
             _character.gameObject.SetActive(false);
@@ -26,7 +29,7 @@ namespace GGJ23
 
         void Update()
         {
-        
+            chunkGen.CheckPosition(_character.position);
         }
     }
 }

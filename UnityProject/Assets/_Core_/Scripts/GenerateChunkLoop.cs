@@ -242,7 +242,22 @@ namespace GGJ23{
 
                 
             }
-            Debug.Log("Dick index: "+ currentDicIndex[0]+", "+currentDicIndex[1]+", "+currentDicIndex[2]);
+        }
+        public void CheckPosition(Vector3 pos){
+            //X left
+            if( pos.x < meshes[0,0,0].transform.position.x + (chunkSize/2) ) MoveChunks(CARDINALS.LEFT);
+            //X right
+            else if( pos.x > meshes[1,0,0].transform.position.x + (chunkSize/2) ) MoveChunks(CARDINALS.RIGHT);
+            
+            //Y DOWN
+            if( pos.y < meshes[0,0,0].transform.position.y + (chunkSize/2) ) MoveChunks(CARDINALS.DOWN);
+            //Y UP
+            else if( pos.y > meshes[0,1,0].transform.position.y + (chunkSize/2) ) MoveChunks(CARDINALS.UP);
+
+            //Z forward
+            if( pos.z < meshes[0,0,0].transform.position.z + (chunkSize/2) ) MoveChunks(CARDINALS.BACKWARD);
+            //Z backard
+            else if( pos.z > meshes[0,0,1].transform.position.z + (chunkSize/2) ) MoveChunks(CARDINALS.FORWARD);
         }
     }
 }

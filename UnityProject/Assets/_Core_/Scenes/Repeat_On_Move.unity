@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0, g: 0, b: 0, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.04
@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1633614358871184477, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
+      propertyPath: _terminalFallSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8158653402744603368, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -177,6 +181,10 @@ PrefabInstance:
     - target: {fileID: 8158653402744603375, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: m_Name
       value: Gameplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158653402982854131, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
+      propertyPath: numStartPoints
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}

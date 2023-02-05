@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a550268cb2c893544b98c441b605f853, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!114 &376123313 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8672950722667377557, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
@@ -143,8 +143,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d688d44e09e523e42aaba0af8073dc19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1001 &8158653403088414396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -246,19 +246,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8158653402982854126, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: _caldero
-      value: 
+      value:
       objectReference: {fileID: 376123313}
     - target: {fileID: 8158653402982854126, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: _calderosApagados.Array.data[0]
-      value: 
+      value:
       objectReference: {fileID: 237284724}
     - target: {fileID: 8158653402982854126, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: _calderosApagados.Array.data[1]
-      value: 
+      value:
       objectReference: {fileID: 0}
     - target: {fileID: 8158653402982854126, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: _calderosApagados.Array.data[2]
-      value: 
+      value:
       objectReference: {fileID: 0}
     - target: {fileID: 8596772691512094473, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: m_IsActive

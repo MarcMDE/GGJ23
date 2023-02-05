@@ -76,11 +76,11 @@ namespace GGJ23
                     {
                         _propsSpawner.Spawn(m, _nProps, p);
                     }
-                    i++;
+                    
                     // TODO: Spawn roots under (and paint :/)
     
                 }
-                
+            i++;            
             }
 
             OnWorldReady.Invoke();

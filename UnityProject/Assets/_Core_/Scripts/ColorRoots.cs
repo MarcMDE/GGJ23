@@ -11,14 +11,14 @@ public class ColorRoots : MonoBehaviour
     [SerializeField]
     float _blendRange = 0.2f;
     const int _nEnvironments = 4;
-    Color[] _colors = new Color[_nEnvironments];
+    [SerializeField] Color[] _colors = new Color[_nEnvironments];
 
     void Start()
     {
-        _colors[(int)Environments.AUTUM] = Color.red;
+       /* _colors[(int)Environments.AUTUM] = Color.red;
         _colors[(int)Environments.WINTER] = Color.white;
         _colors[(int)Environments.SPRING] = Color.green;
-        _colors[(int)Environments.NONE] = Color.black;
+        _colors[(int)Environments.NONE] = Color.black;*/
     }
 
     private float Scale(float value, float min, float max, float minScale, float maxScale)

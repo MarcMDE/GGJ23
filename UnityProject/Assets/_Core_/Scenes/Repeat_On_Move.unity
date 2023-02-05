@@ -14,13 +14,13 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0, g: 0, b: 0, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.7176471, g: 0.7176471, b: 0.7176471, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.04
+  m_FogDensity: 0.05
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.6320754, g: 0.09182981, b: 0.10969449, a: 1}
+  m_AmbientSkyColor: {r: 0.37892914, g: 0.37892914, b: 0.37892914, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1633614358871184477, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: _terminalFallSpeed
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8158653402744603368, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
       propertyPath: m_RootOrder
@@ -182,8 +182,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gameplay
       objectReference: {fileID: 0}
-    - target: {fileID: 8158653402982854131, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
-      propertyPath: numStartPoints
+    - target: {fileID: 8158653403280055643, guid: d20a7a647e3288845ac05e8f21fcf7c7, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

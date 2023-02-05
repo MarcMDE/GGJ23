@@ -154,11 +154,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &554631763 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2157463186505685252, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
-  m_PrefabInstance: {fileID: 2157463186130738628}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &753973233
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,9 +339,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2157463186505685249, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
-      propertyPath: _meshGenerator
+    - target: {fileID: 2157463186130738636, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
+      propertyPath: rootParent
       value: 
+      objectReference: {fileID: 446001825}
+    - target: {fileID: 2157463186505685249, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
+      propertyPath: numStartPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2157463186505685252, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
       propertyPath: m_Name
@@ -396,24 +395,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2157463186505685254, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
-      propertyPath: mat
-      value: 
-      objectReference: {fileID: 2100000, guid: 08fe607f74d210b4580a5177515117c5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7437f70d037bdc3469642a445ca688d3, type: 3}
---- !u!114 &2157463186130738636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554631763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0fff884b7cf4403a84e3de231cd1bf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootParent: {fileID: 446001825}
-  prefab: {fileID: 5223458086888917381, guid: f786c051e74354231a2b6783f935bdac, type: 3}
-  one: 0

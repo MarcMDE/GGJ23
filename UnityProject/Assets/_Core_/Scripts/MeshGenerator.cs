@@ -375,6 +375,8 @@ public class MeshGenerator : MonoBehaviour {
         mesh.RecalculateNormals ();
         
         meshRenderer.material = mat;
+        MeshCollider mc = gameObject.AddComponent<MeshCollider>();
+
         //transform.localPosition = Vector3.zero;
 
         /*

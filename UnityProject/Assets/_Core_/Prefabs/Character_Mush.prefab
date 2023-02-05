@@ -80,7 +80,7 @@ MonoBehaviour:
   _cameraController: {fileID: 0}
   _playerSpeed: 4
   _jumpForce: 7.5
-  _terminalFallSpeed: 12
+  _terminalFallSpeed: 5
   _airSpeedFactor: 1.75
 --- !u!1001 &8310884482715877963
 PrefabInstance:

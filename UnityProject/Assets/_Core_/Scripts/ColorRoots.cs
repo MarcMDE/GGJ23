@@ -48,12 +48,13 @@ public class ColorRoots : MonoBehaviour
         Vector3[] vertices = mesh.vertices;
 
         Color[] colors = new Color[vertices.Length];
-        float[] values = new float[vertices.Length];
+        //float[] values = new float[vertices.Length];
 
         float max = float.MinValue;
         float min = float.MaxValue;
 
-        int axis = Random.Range(0, 3);
+        int axis = Random.Range(0, 2);
+        if (axis == 1) axis = 2;
 
         for (int i = 0; i < vertices.Length; i++)
         {
@@ -68,7 +69,7 @@ public class ColorRoots : MonoBehaviour
         {
             float f = Scale(vertices[i][axis], min, max, 0, 1);
 
-            if(f < _boundsBlendRange)
+            if (f < _boundsBlendRange)
             {
                 float blendF = Scale(f, 0, _boundsBlendRange, 0, 1);
                 colors[i] = Color.Lerp(_colors[(int)Environments.NONE], _colors[(int)e1], blendF);
@@ -94,7 +95,27 @@ public class ColorRoots : MonoBehaviour
 
         }
 
-        // assign the array of colors to the Mesh.
+        if (axis == 0) axis = 2;
+        else axis = 0;
+
+        // Alt axis
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            float f = Scale(vertices[i][axis], min, max, 0, 1);
+
+            if (f < _boundsBlendRange)
+            {
+                float blendF = Scale(f, 0, _boundsBlendRange, 0, 1);
+                colors[i] = Color.Lerp(_colors[(int)Environments.NONE], colors[i], blendF);
+            }
+            else if (f > 1 - _boundsBlendRange)
+            {
+                float blendF = Scale(f, 1 - _boundsBlendRange, 1, 0, 1);
+                colors[i] = Color.Lerp(colors[i], _colors[(int)Environments.NONE], blendF);
+            }
+        }
+
+            // assign the array of colors to the Mesh.
         mesh.colors = colors;
     }
 

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] string mainSceneName = "Main";
+    public Transform creditos;
 
     void Start()
     {
@@ -14,12 +15,16 @@ public class MainMenuController : MonoBehaviour
 
     void Update()
     {
-        
+    if(Input.GetKeyDown(KeyCode.Escape)){
+
+        HideCredits();
+    }
+
     }
 
     public void ShowCredits()
     {
-
+        creditos.gameObject.SetActive(true);
     }
 
     public void ShowOptions()
@@ -29,7 +34,7 @@ public class MainMenuController : MonoBehaviour
 
     public void HideCredits()
     {
-
+        creditos.gameObject.SetActive(false);
     }
 
     public void HideOptions()

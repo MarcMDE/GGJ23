@@ -108,3 +108,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gManager: {fileID: 0}
+  _text: {fileID: 0}

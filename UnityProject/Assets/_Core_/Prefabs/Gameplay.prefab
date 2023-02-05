@@ -196,6 +196,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 1876123799782108638, guid: 9b39f532b45ce5c4baca2e0d299f5438, type: 3}
+      propertyPath: chunkGen
+      value: 
+      objectReference: {fileID: 8158653402982854130}
+    - target: {fileID: 1876123799782108638, guid: 9b39f532b45ce5c4baca2e0d299f5438, type: 3}
       propertyPath: _character
       value: 
       objectReference: {fileID: 1633614358871184466}
@@ -317,6 +321,10 @@ PrefabInstance:
       propertyPath: rootParent
       value: 
       objectReference: {fileID: 8158653404049092087}
+    - target: {fileID: 2217238864670905119, guid: 5cab67c5f36ac124b92b0a715add316a, type: 3}
+      propertyPath: numStartPoints
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cab67c5f36ac124b92b0a715add316a, type: 3}
 --- !u!114 &8158653402982854126 stripped
@@ -335,6 +343,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2217238864670905117, guid: 5cab67c5f36ac124b92b0a715add316a, type: 3}
   m_PrefabInstance: {fileID: 8069442232114314988}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8158653402982854130 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2217238864670905118, guid: 5cab67c5f36ac124b92b0a715add316a, type: 3}
+  m_PrefabInstance: {fileID: 8069442232114314988}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fff884b7cf4403a84e3de231cd1bf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8158653403814456736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -448,6 +467,10 @@ PrefabInstance:
       propertyPath: _cameraController
       value: 
       objectReference: {fileID: 8448532511198610104}
+    - target: {fileID: 7463202981063994311, guid: 03ec32b9dfbf8d3449c6ae3771624e57, type: 3}
+      propertyPath: _terminalFallSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7463202981063994312, guid: 03ec32b9dfbf8d3449c6ae3771624e57, type: 3}
       propertyPath: m_RootOrder
       value: 4

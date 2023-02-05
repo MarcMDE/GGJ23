@@ -61,6 +61,13 @@ namespace GGJ23{
             _numMeshes = 0;
             ResetChunks( new Dictionary<CUBE_ORIENTATION,List<Vector3>>());
         }
+        public void ReGenerate()
+        {
+            _meshesReady = false;
+            _numMeshes = 1;
+            ResetChunks( startPointsDictArray[currentDicIndex[0], currentDicIndex[1], currentDicIndex[2] ] );
+        }
+
 
         // Update is called once per frame
         void Update()
@@ -71,9 +78,8 @@ namespace GGJ23{
             if(Input.GetKeyDown(KeyCode.LeftArrow)) MoveChunks(CARDINALS.LEFT);
             if(Input.GetKeyDown(KeyCode.RightArrow)) MoveChunks(CARDINALS.RIGHT);
             if(Input.GetKeyDown(KeyCode.W)) MoveChunks(CARDINALS.UP);
-            if(Input.GetKeyDown(KeyCode.S)) MoveChunks(CARDINALS.DOWN);
-            if(Input.GetKeyDown(KeyCode.Space)) ResetChunks( startPointsDictArray[ currentDicIndex[0] , currentDicIndex[1] , currentDicIndex[2] ]);
-            */
+            if(Input.GetKeyDown(KeyCode.S)) MoveChunks(CARDINALS.DOWN);*/
+            
         }
         private List<Vector3> FlipListCoordinate(List<Vector3> vl, bool dimX){
             for(int j = 0; j < vl.Count; j++ )

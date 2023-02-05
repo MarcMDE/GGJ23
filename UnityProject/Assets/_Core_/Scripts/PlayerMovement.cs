@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
             Anim.SetBool("Jump", false);
             Anim.SetFloat("Speed", 0f, 0.1f, Time.deltaTime);
         }
-        print("Idle");
+        //print("Idle");
 
     }
 
@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
             Anim.SetBool("Jump", false);
             Anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
         }
-        print("Walk");
+        //print("Walk");
 
     }
 
@@ -66,20 +66,20 @@ public class PlayerMovement : MonoBehaviour
             Anim.SetFloat("Speed", 1f, 0.1f, Time.deltaTime);
         }
 
-        print("Run");
+        //print("Run");
     }
 
     private void Jump()
     {
 
         //velocityGravity.y = Mathf.Sqrt(jumpHeight * -1.5f * gravity);
-        Debug.Log("Jump");
+        //Debug.Log("Jump");
         if (Anim is not null) Anim.SetBool("Jump", true);
 
     }
     private void Fall()
     {
-        Debug.Log("Falling");
+        //Debug.Log("Falling");
         if (Anim is not null)
         {
             Anim.speed = 1f;
@@ -165,9 +165,15 @@ public class PlayerMovement : MonoBehaviour
         //else Idle();
         // ----------------------------------------
         
-        // Character rotation
-        transform.forward = new Vector3(_cameraController.transform.forward.x, 0, _cameraController.transform.forward.z);
+        // Character rotation --------------------
+        Vector3 lookVector = new Vector3(_cameraController.transform.forward.x, 0, _cameraController.transform.forward.z);
+        if (forward < 0) lookVector = -lookVector;
 
+        if (side < 0) lookVector = (lookVector + new Vector3(-_cameraController.transform.right.x, 0, -_cameraController.transform.right.z)) * -side;
+        else if (side > 0) lookVector = (lookVector + new Vector3(_cameraController.transform.right.x, 0, _cameraController.transform.right.z)) * side;
+
+        transform.forward = lookVector;
+        // ---------------------------------------
         // Set camera position
         _cameraController.TargetPosition = transform.position;
     }

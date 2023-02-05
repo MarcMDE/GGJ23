@@ -4,6 +4,7 @@ using Unity.Collections;
 using System.Threading;
 using System.Linq;
 using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 //Todo Shared Vertices
 //Todo Borders
@@ -13,7 +14,10 @@ using UnityEngine.Serialization;
 public class MeshGenerator : MonoBehaviour {
 
     private MeshFilter meshFilter;
+    private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
+
+    public UnityAction OnMeshGenerated;
 
     /*private List<Vector3> vertices;
     private List<Vector2> uvs;
@@ -82,6 +86,7 @@ public class MeshGenerator : MonoBehaviour {
 		};
         meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
+        meshRenderer = GetComponent<MeshRenderer>();
     
     }
 
@@ -196,7 +201,7 @@ public class MeshGenerator : MonoBehaviour {
         shader.SetBuffer (0, "points", pointsBuffer);
         shader.SetBuffer (0, "triangles", triangleBuffer);
         shader.SetInts ("dims", dims);
-        shader.SetFloat ("isoLevel", thmin*256);
+        shader.SetFloat ("isoLevel", thmin);
         shader.SetBool("interpolate", interpolate);
 
         shader.Dispatch (0, threadDims[0], threadDims[1], threadDims[2]);
@@ -369,9 +374,12 @@ public class MeshGenerator : MonoBehaviour {
         mesh.Optimize ();
         mesh.RecalculateNormals ();
         
-        
-        transform.localPosition = Vector3.zero;
+        meshRenderer.material = mat;
+        MeshCollider mc = gameObject.AddComponent<MeshCollider>();
 
+        //transform.localPosition = Vector3.zero;
+
+        /*
         BoxCollider bc = gameObject.GetComponent<BoxCollider>();
 
         if (bc is not null)
@@ -380,7 +388,10 @@ public class MeshGenerator : MonoBehaviour {
         }
         bc = gameObject.AddComponent<BoxCollider>();
         bc.isTrigger = true;
-        
+        */
+
+        OnMeshGenerated.Invoke();
+
         //transform.localScale = new Vector3( 1f/dims[2] , 1f/dims[1] , 1f/dims[0] );
         //transform.localPosition = - transform.parent.InverseTransformPoint(transform.TransformPoint(bc.center));
         

@@ -35,6 +35,9 @@ namespace GGJ23{
 		[SerializeField]
         MeshGenerator _meshGenerator;
 
+        private System.DateTime RootGenStarts;
+        private System.DateTime RootGenEnds;
+
         private void Awake()
         {
             //_meshGenerator = GetComponent<MeshGenerator>();
@@ -65,6 +68,8 @@ namespace GGJ23{
      
         public void SetChunk(Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints, MeshGenerator meshGenerator)
         {   
+            
+
             _lines = new List<Line>();
             _connectionLines = new List<Line>();
             //Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints = pointsDict;
@@ -306,6 +311,8 @@ namespace GGJ23{
             }
             //AddDensity(_startingPoints);
                 */
+
+                RootGenStarts = System.DateTime.UtcNow;
                 Vector3 currentVec;
                 do{
                     r = Random.Range(0, sides);
@@ -344,6 +351,11 @@ namespace GGJ23{
             ComputeMatrix();
 
             meshGenerator.LoadData(_matrix);
+
+            RootGenEnds = System.DateTime.UtcNow;
+            System.TimeSpan ts = RootGenEnds - RootGenStarts;
+        
+            Debug.Log ("Elapsed Root Gen Time: "+ts.ToString ());
 
             //return startingPoints;
         }

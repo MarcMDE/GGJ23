@@ -36,6 +36,11 @@ public class PlayerController : MonoBehaviour
         _collectableGathered = Environments.NONE;
     }
 
+    public void GiveAllCollectables()
+    {
+        _nCollectables = 0;
+        _collectableGathered = Environments.NONE;
+    }
     void GatherCollectable()
     {
         if (_currentCollidingCollectable.Type != _collectableGathered)
@@ -74,21 +79,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        CollectableBehaviour c = other.GetComponent<CollectableBehaviour>();
-        // Show message
-        // enable gathering
-        _currentCollidingCollectable = c;
-        OnCollectableRangeEnter.Invoke();
+        if (other.tag == "col")
+        {
+            CollectableBehaviour c = other.GetComponent<CollectableBehaviour>();
+            // Show message
+            // enable gathering
+            _currentCollidingCollectable = c;
+            OnCollectableRangeEnter.Invoke();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        CollectableBehaviour c = other.GetComponent<CollectableBehaviour>();
-
-        if (c == _currentCollidingCollectable)
+        if (other.tag == "col")
         {
-            _currentCollidingCollectable = null;
-            OnCollectableRangeExit.Invoke();
+            CollectableBehaviour c = other.GetComponent<CollectableBehaviour>();
+
+            if (c == _currentCollidingCollectable)
+            {
+                _currentCollidingCollectable = null;
+                OnCollectableRangeExit.Invoke();
+            }
+
         }
     }
 

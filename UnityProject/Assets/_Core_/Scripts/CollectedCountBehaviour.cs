@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
 using UnityEngine.UI;
 
 
@@ -36,17 +35,19 @@ public class CollectedCountBehaviour : MonoBehaviour
             _image.enabled = false;
         }
         else if (!_active && _playerController.GetCurrentCollectable() != Environments.NONE)
+
         {
             _active = true;
 
             _countText.enabled = true;
             _image.enabled = true;
-            //_image.sprite = _sprites[(int)_playerController.GetCurrentCollectable()];
+            _image.sprite = _sprites[(int)_playerController.GetCurrentCollectable()];
         }
 
         if (_active)
         {
             _countText.text = _playerController.GetCollectedNum().ToString();
+            _image.sprite = _sprites[(int)_playerController.GetCurrentCollectable()];
         }
     }
 }

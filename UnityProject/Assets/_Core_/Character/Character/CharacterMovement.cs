@@ -167,6 +167,7 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (!dashing && !climbing) {
@@ -175,6 +176,7 @@ public class CharacterMovement : MonoBehaviour
                 StartCoroutine(DashTurnDelay());
             }
         }
+        */
 
         if (Input.GetKeyDown(KeyCode.E))
         {

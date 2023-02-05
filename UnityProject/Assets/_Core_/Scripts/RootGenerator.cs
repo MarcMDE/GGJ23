@@ -312,7 +312,7 @@ namespace GGJ23{
             //AddDensity(_startingPoints);
                 */
 
-                RootGenStarts = System.DateTime.UtcNow;
+                
                 Vector3 currentVec;
                 do{
                     r = Random.Range(0, sides);
@@ -347,7 +347,7 @@ namespace GGJ23{
 
 
             //AddDensity(startingPoints);
-
+            RootGenStarts = System.DateTime.UtcNow;
             ComputeMatrix();
 
             meshGenerator.LoadData(_matrix);

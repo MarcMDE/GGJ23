@@ -10,7 +10,7 @@ namespace GGJ23{
         [SerializeField] GameObject prefab;
 
         [SerializeField] bool one = false;
-        const float chunkSize = 64f;
+        const float chunkSize = 32f;
         RootGenerator rootGenerator;
         GameObject[,,] meshes = new GameObject[2,2,2];
 
@@ -21,7 +21,7 @@ namespace GGJ23{
         
         //int[] meshIndex = new int[] {0,0,0};
 
-         int[] order = {0};//{1,0,2};
+         int[] order = {0,1};//{1,0,2};
 
         //private Dictionary<CUBE_ORIENTATION,List<Vector3>> _startingPoints = new Dictionary<CUBE_ORIENTATION,List<Vector3>>();
 
@@ -38,6 +38,8 @@ namespace GGJ23{
             if(Input.GetKeyDown(KeyCode.DownArrow)) MoveChunks(CARDINALS.BACKWARD);
             if(Input.GetKeyDown(KeyCode.LeftArrow)) MoveChunks(CARDINALS.LEFT);
             if(Input.GetKeyDown(KeyCode.RightArrow)) MoveChunks(CARDINALS.RIGHT);
+            if(Input.GetKeyDown(KeyCode.W)) MoveChunks(CARDINALS.UP);
+            if(Input.GetKeyDown(KeyCode.S)) MoveChunks(CARDINALS.DOWN);
             if(Input.GetKeyDown(KeyCode.Space)) ResetChunks( startPointsDictArray[ currentDicIndex[0] , currentDicIndex[1] , currentDicIndex[2] ]);
         }
         private List<Vector3> FlipListCoordinate(List<Vector3> vl, bool dimX){
@@ -75,7 +77,7 @@ namespace GGJ23{
             {
                 
                 //Centers
-                if(first || i == 1){
+                if(first || i > 0){
                     rootGenerator.SetChunk(startingPoints, meshes[0,i,0].GetComponent<MeshGenerator>());
                 }else{
                     Debug.Log("SP count: "+startingPoints.Count); 
@@ -124,7 +126,7 @@ namespace GGJ23{
             switch (c)
             {
                 case CARDINALS.FORWARD: 
-                    for(int j = 0 ; j<1; j++){
+                    for(int j = 0 ; j<2; j++){
                         for(int i = 0; i<2; i++){
                             Transform currentTF = meshes[i,j,0].transform;
                             currentTF.position = new Vector3(currentTF.position.x,currentTF.position.y,currentTF.position.z + 2*(chunkSize - 1));
@@ -137,7 +139,7 @@ namespace GGJ23{
                     currentDicIndex[2] = currentDicIndex[2] == 0 ? 1 : 0;
                     break;
                 case CARDINALS.BACKWARD: 
-                    for(int j = 0 ; j<1; j++){
+                    for(int j = 0 ; j<2; j++){
                         for(int i = 0; i<2; i++){
                             Transform currentTF = meshes[i,j,1].transform;
                             currentTF.position = new Vector3(currentTF.position.x,currentTF.position.y,currentTF.position.z - 2*(chunkSize - 1));
@@ -150,7 +152,7 @@ namespace GGJ23{
                     currentDicIndex[2] = currentDicIndex[2] == 0 ? 1 : 0;
                     break;
                 case CARDINALS.LEFT: 
-                    for(int j = 0 ; j<1; j++){
+                    for(int j = 0 ; j<2; j++){
                         for(int i = 0; i<2; i++){
                             Transform currentTF = meshes[1,j,i].transform;
                             currentTF.position = new Vector3(currentTF.position.x - 2*(chunkSize - 1),currentTF.position.y,currentTF.position.z );
@@ -163,7 +165,7 @@ namespace GGJ23{
                     currentDicIndex[0] = currentDicIndex[0] == 0 ? 1 : 0;
                     break;
                 case CARDINALS.RIGHT:
-                    for(int j = 0 ; j<1; j++){
+                    for(int j = 0 ; j<2; j++){
                         for(int i = 0; i<2; i++){
                             Transform currentTF = meshes[0,j,i].transform;
                             currentTF.position = new Vector3(currentTF.position.x + 2*(chunkSize - 1),currentTF.position.y,currentTF.position.z );
@@ -176,8 +178,30 @@ namespace GGJ23{
                     currentDicIndex[0] = currentDicIndex[0] == 0 ? 1 : 0;
                     break;
                 case CARDINALS.UP:
+                    for(int j = 0 ; j<2; j++){
+                        for(int i = 0; i<2; i++){
+                            Transform currentTF = meshes[j,0,i].transform;
+                            currentTF.position = new Vector3(currentTF.position.x ,currentTF.position.y + 2*(chunkSize - 1) ,currentTF.position.z );
+
+                            GameObject prev = meshes[j,0,i];
+                            meshes[j,0,i] = meshes[j,1,i];
+                            meshes[j,1,i] = prev;
+                        }
+                    }
+                    currentDicIndex[1] = currentDicIndex[1] == 0 ? 1 : 0;
                     break;
                 case CARDINALS.DOWN: 
+                    for(int j = 0 ; j<2; j++){
+                        for(int i = 0; i<2; i++){
+                            Transform currentTF = meshes[j,1,i].transform;
+                            currentTF.position = new Vector3(currentTF.position.x ,currentTF.position.y - 2*(chunkSize - 1) ,currentTF.position.z );
+
+                            GameObject prev = meshes[j,1,i];
+                            meshes[j,1,i] = meshes[j,0,i];
+                            meshes[j,0,i] = prev;
+                        }
+                    }
+                    currentDicIndex[1] = currentDicIndex[1] == 0 ? 1 : 0;
                     break;
                 default:
                     break;

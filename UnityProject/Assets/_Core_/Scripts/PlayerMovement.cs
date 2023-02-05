@@ -20,10 +20,73 @@ public class PlayerMovement : MonoBehaviour
     private bool _groundedPlayer;
     private Vector3 _gravity;
 
+    Animator Anim;
+
+
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
         _gravity = Physics.gravity;
+
+        Anim = GetComponentInChildren<Animator>();
+    }
+
+    //Animations
+    private void Idle()
+    {
+
+        //speed = 0f;
+        if (Anim is not null)
+        {
+            Anim.SetBool("Jump", false);
+            Anim.SetFloat("Speed", 0f, 0.1f, Time.deltaTime);
+        }
+        //print("Idle");
+
+    }
+
+    private void Walk()
+    {
+        //speed = walkSpeed;
+        if (Anim is not null)
+        {
+            Anim.SetBool("Jump", false);
+            Anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+        }
+        //print("Walk");
+
+    }
+
+    private void Run()
+    {
+        //speed = runSpeed;
+        if (Anim is not null)
+        {
+            Anim.SetBool("Jump", false);
+            Anim.SetFloat("Speed", 1f, 0.1f, Time.deltaTime);
+        }
+
+        //print("Run");
+    }
+
+    private void Jump()
+    {
+
+        //velocityGravity.y = Mathf.Sqrt(jumpHeight * -1.5f * gravity);
+        //Debug.Log("Jump");
+        if (Anim is not null) Anim.SetBool("Jump", true);
+
+    }
+    private void Fall()
+    {
+        //Debug.Log("Falling");
+        if (Anim is not null)
+        {
+            Anim.speed = 1f;
+            Anim.SetBool("Fall", true);
+
+        }
+
     }
 
     void Update()
@@ -51,13 +114,26 @@ public class PlayerMovement : MonoBehaviour
         // Apply gravity
         _controller.Move(_playerVelocity * Time.deltaTime);
 
-        // Jump
-        if (Input.GetButtonDown("Jump") && _controller.isGrounded)
+        if (_controller.isGrounded)
         {
-            //_playerVelocity.y += _jumpForce;
-            _playerVelocity.y = _jumpForce;
-            _controller.Move(_playerVelocity * Time.deltaTime);
+            if (Anim is not null) Anim.SetBool("Fall", false);
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                //_playerVelocity.y += _jumpForce;
+                _playerVelocity.y = _jumpForce;
+                _controller.Move(_playerVelocity * Time.deltaTime);
+                Jump();
+            }
+
+
         }
+        else if (_playerVelocity.y < 0)
+        {
+            Fall();
+        }
+
+        // Jump
 
         // Character movement (X,Z) ----------------
         float forward = Input.GetAxis("Vertical");
@@ -70,12 +146,34 @@ public class PlayerMovement : MonoBehaviour
         if (!_controller.isGrounded)
             planeVelocity *= _airSpeedFactor;
 
+        if (_controller.isGrounded)
+        {
+            if (planeVelocity.magnitude > 0)
+            {
+                Run();
+            }
+            else
+            {
+                Idle();
+            }
+        }
+
+
         _controller.Move(planeVelocity * Time.deltaTime);
+
+        //if (planeVelocity.magnitude > 0 && _controller.isGrounded) Run();
+        //else Idle();
         // ----------------------------------------
+        
+        // Character rotation --------------------
+        Vector3 lookVector = new Vector3(_cameraController.transform.forward.x, 0, _cameraController.transform.forward.z);
+        if (forward < 0) lookVector = -lookVector;
 
-        // Character rotation
-        transform.forward = new Vector3(_cameraController.transform.forward.x, 0, _cameraController.transform.forward.z);
+        if (side < 0) lookVector = (lookVector + new Vector3(-_cameraController.transform.right.x, 0, -_cameraController.transform.right.z)) * -side;
+        else if (side > 0) lookVector = (lookVector + new Vector3(_cameraController.transform.right.x, 0, _cameraController.transform.right.z)) * side;
 
+        transform.forward = lookVector;
+        // ---------------------------------------
         // Set camera position
         _cameraController.TargetPosition = transform.position;
     }

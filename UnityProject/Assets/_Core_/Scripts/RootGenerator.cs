@@ -35,6 +35,9 @@ namespace GGJ23{
 		[SerializeField]
         MeshGenerator _meshGenerator;
 
+        private System.DateTime RootGenStarts;
+        private System.DateTime RootGenEnds;
+
         private void Awake()
         {
             //_meshGenerator = GetComponent<MeshGenerator>();
@@ -57,15 +60,18 @@ namespace GGJ23{
         public void GenMesh()
         {
 
-            _lines = new List<Line>();
-            _connectionLines = new List<Line>();
-            float sTime = Time.time;
+
+            /*float sTime = Time.time;
 			SetChunk(new Dictionary<CUBE_ORIENTATION,List<Vector3>>(), _meshGenerator);
-            Debug.Log($"PTIME: {Time.time - sTime}");
+            Debug.Log($"PTIME: {Time.time - sTime}");*/
 	    }
-     
+
         public void SetChunk(Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints, MeshGenerator meshGenerator)
         {
+
+
+            _lines = new List<Line>();
+            _connectionLines = new List<Line>();
             //Dictionary<CUBE_ORIENTATION,List<Vector3>> startingPoints = pointsDict;
 
             _matrix = new float[_matrixSize, _matrixSize, _matrixSize];
@@ -90,8 +96,8 @@ namespace GGJ23{
                 startingPoints.Add(CUBE_ORIENTATION.XN,pointList);
             }else{
                 for(int i = 0; i < startingPoints[CUBE_ORIENTATION.XN].Count; i++){
-                    point = startingPoints[CUBE_ORIENTATION.XN][i];
-                    _connectionLines.Add( new Line(new Vector3(0,point.y,point.x), new Vector3(_securityOffset,point.y,point.x) ));
+                    Vector3 point3 = startingPoints[CUBE_ORIENTATION.XN][i];
+                    _connectionLines.Add( new Line(new Vector3(0,point3.y,point3.z), new Vector3(_securityOffset,point3.y,point3.z) ));
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
@@ -105,8 +111,8 @@ namespace GGJ23{
                 startingPoints.Add(CUBE_ORIENTATION.XP,pointList);
             }else{
                 for(int i = 0; i < startingPoints[CUBE_ORIENTATION.XP].Count; i++){
-                    point = startingPoints[CUBE_ORIENTATION.XP][i];
-                    _connectionLines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point.y, point.x), new Vector3(_matrixSize-1, point.y, point.x) ) );
+                    Vector3 point3 = startingPoints[CUBE_ORIENTATION.XP][i];
+                    _connectionLines.Add( new Line(new Vector3(_matrixSize-1-_securityOffset, point3.y, point3.z), new Vector3(_matrixSize-1, point3.y, point3.z) ) );
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
@@ -120,8 +126,8 @@ namespace GGJ23{
                 startingPoints.Add(CUBE_ORIENTATION.ZN,pointList);
             }else{
                 for(int i = 0; i < startingPoints[CUBE_ORIENTATION.ZN].Count; i++){
-                    point = startingPoints[CUBE_ORIENTATION.ZN][i];
-                    _connectionLines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)));
+                    Vector3 point3 = startingPoints[CUBE_ORIENTATION.ZN][i];
+                    _connectionLines.Add( new Line(new Vector3(point3.x, point3.y, 0), new Vector3(point3.x, point3.y, _securityOffset)));
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
@@ -135,12 +141,12 @@ namespace GGJ23{
                 startingPoints.Add(CUBE_ORIENTATION.ZP,pointList);
             }else{
                 for(int i = 0; i < startingPoints[CUBE_ORIENTATION.ZP].Count; i++){
-                    point = startingPoints[CUBE_ORIENTATION.ZP][i];
-                    _connectionLines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)));
+                    Vector3 point3 = startingPoints[CUBE_ORIENTATION.ZP][i];
+                    _connectionLines.Add( new Line(new Vector3(point3.x, point3.y, _matrixSize-1-_securityOffset), new Vector3(point3.x, point3.y, _matrixSize-1)));
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
-            
+
             /*for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint();
                 startingPoints[(int)CUBE_ORIENTATION.XN,i] = new Vector3(_securityOffset, point.y, point.x);
@@ -153,15 +159,15 @@ namespace GGJ23{
             }
             for(int i = 0; i < numStartPoints; i++){
                 point = GetRandomPoint();
-                startingPoints[(int)CUBE_ORIENTATION.ZN,i] = new Vector3(point.x, point.y, _securityOffset); 
+                startingPoints[(int)CUBE_ORIENTATION.ZN,i] = new Vector3(point.x, point.y, _securityOffset);
                 _lines.Add( new Line(new Vector3(point.x, point.y, 0), new Vector3(point.x, point.y, _securityOffset)) );
             }
             for(int i = 0; i < numStartPoints; i++){
-                point = GetRandomPoint(); 
+                point = GetRandomPoint();
                 startingPoints[(int)CUBE_ORIENTATION.ZP,i] = new Vector3(point.x, point.y, _matrixSize-1-_securityOffset);
                 _lines.Add( new Line(new Vector3(point.x, point.y, _matrixSize-1-_securityOffset), new Vector3(point.x, point.y, _matrixSize-1)) );
             }*/
-            
+
             foreach (KeyValuePair<CUBE_ORIENTATION,List<Vector3>> side in startingPoints)
             {
                 foreach (var currentPoint in side.Value)
@@ -195,7 +201,7 @@ namespace GGJ23{
                     _lines.Add(new Line(prevPoint, l.End));
                     // --------------------------
 
-                    
+
                 }
             }
 
@@ -263,9 +269,9 @@ namespace GGJ23{
                         r = Random.Range(0, sides);
                         r2 = Random.Range(0, numStartPoints);
                     }while(currentPoint == startingPoints[r,r2]);
-                    
+
                         _lines.Add(new Line(currentPoint, startingPoints[r][(int)Mathf.Min(r2,startingPoints[r].Count-1)]));
-                    
+
 
                 }
             }*/
@@ -305,6 +311,8 @@ namespace GGJ23{
             }
             //AddDensity(_startingPoints);
                 */
+
+
                 Vector3 currentVec;
                 do{
                     r = Random.Range(0, sides);
@@ -312,7 +320,7 @@ namespace GGJ23{
                     currentVec = startingPoints[(CUBE_ORIENTATION)r][(int)Mathf.Min(r2,startingPoints[(CUBE_ORIENTATION)r].Count-1)];
                 }while(usedPoints.Contains(currentVec));
 
-                
+
 
                 Line l = new Line(midPoint, currentVec);
                 // NOISE -----------------
@@ -339,10 +347,15 @@ namespace GGJ23{
 
 
             //AddDensity(startingPoints);
-
+            RootGenStarts = System.DateTime.UtcNow;
             ComputeMatrix();
 
             meshGenerator.LoadData(_matrix);
+
+            RootGenEnds = System.DateTime.UtcNow;
+            System.TimeSpan ts = RootGenEnds - RootGenStarts;
+
+            Debug.Log ("Elapsed Root Gen Time: "+ts.ToString ());
 
             //return startingPoints;
         }
@@ -398,15 +411,15 @@ namespace GGJ23{
             return new Vector2(x, y);
         }
 
-        void Update()
+        /*void Update()
         {
             /*
             foreach (var l in _lines)
             {
                 l.Draw(_worldScale);
             }
-            */
-        }
+
+        }*/
     }
 
 }

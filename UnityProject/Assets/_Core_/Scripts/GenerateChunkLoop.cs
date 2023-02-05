@@ -15,6 +15,7 @@ namespace GGJ23{
         RootGenerator rootGenerator;
         GameObject[,,] meshes = new GameObject[2,2,2];
 
+
         bool _meshesReady;
         int _numMeshes;
         int _targetMeshes;
@@ -33,6 +34,8 @@ namespace GGJ23{
         //private Dictionary<CUBE_ORIENTATION,List<Vector3>> _startingPoints = new Dictionary<CUBE_ORIENTATION,List<Vector3>>();
 
         public GameObject[,,] Meshes { get { return meshes; } }
+
+        public float ChunkSize { get { return chunkSize; } }
 
 
         void Awake()
@@ -62,6 +65,7 @@ namespace GGJ23{
         // Update is called once per frame
         void Update()
         {   
+            /*
             if(Input.GetKeyDown(KeyCode.UpArrow)) MoveChunks(CARDINALS.FORWARD);
             if(Input.GetKeyDown(KeyCode.DownArrow)) MoveChunks(CARDINALS.BACKWARD);
             if(Input.GetKeyDown(KeyCode.LeftArrow)) MoveChunks(CARDINALS.LEFT);
@@ -69,6 +73,7 @@ namespace GGJ23{
             if(Input.GetKeyDown(KeyCode.W)) MoveChunks(CARDINALS.UP);
             if(Input.GetKeyDown(KeyCode.S)) MoveChunks(CARDINALS.DOWN);
             if(Input.GetKeyDown(KeyCode.Space)) ResetChunks( startPointsDictArray[ currentDicIndex[0] , currentDicIndex[1] , currentDicIndex[2] ]);
+            */
         }
         private List<Vector3> FlipListCoordinate(List<Vector3> vl, bool dimX){
             for(int j = 0; j < vl.Count; j++ )

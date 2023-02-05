@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2217238864670905116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2217238864670905117}
+  - component: {fileID: 2217238864670905089}
+  - component: {fileID: 2217238864670905088}
+  - component: {fileID: 2217238864670905119}
+  - component: {fileID: 2217238864670905118}
+  - component: {fileID: 2217238864670905090}
+  m_Layer: 0
+  m_Name: WorldManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2217238864670905117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217238864670905116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2217238864670905089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217238864670905116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a81004ef95f99e489e02337445daf9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boundsBlendRange: 0.1
+  _blendRange: 0.2
+--- !u!114 &2217238864670905088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217238864670905116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0594cc4397664744dbf9e14a13c17bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2217238864670905119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217238864670905116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96ccdd3d18ff324cb067c586cba4570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rootSmoothIterations: 15
+  _randomness: 1.3
+  _securityOffset: 3
+  _std: 1.8
+  _worldScale: 0.5
+  _matrixSize: 32
+  _targetPopulation: 10
+  numStartPoints: 1
+--- !u!114 &2217238864670905118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217238864670905116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fff884b7cf4403a84e3de231cd1bf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootParent: {fileID: 0}
+  prefab: {fileID: 5223458086888917381, guid: f786c051e74354231a2b6783f935bdac, type: 3}
+  one: 0
+--- !u!114 &2217238864670905090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217238864670905116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0a4260997352543be627c0394e675e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nProps: 4
+  _propsAutum:
+  - {fileID: 3086194323984153867, guid: 219e90d058cbd0e40b701e023493d652, type: 3}
+  - {fileID: 7764956661598477366, guid: 6e2e87ba6623edf46a477ebf5ad2d53c, type: 3}
+  - {fileID: 2642737684206668687, guid: ef67f46b1e857564699a5de3e3febc2c, type: 3}
+  _propsWinter:
+  - {fileID: 5482355909069551032, guid: 7749b46440a08d34d88c6a3244428e78, type: 3}
+  - {fileID: 6664228887409957241, guid: 25417ddec6741cd478b76cb52776dc2c, type: 3}
+  - {fileID: 7927622746644864431, guid: f72ec4656b41d404fa0982b4186d2cb5, type: 3}
+  _propsSpring:
+  - {fileID: 8525445553473799425, guid: 59dd75c61f3957947b21328219830cbf, type: 3}
+  - {fileID: 858053051283026711, guid: 00c7709397edede4497db1616fbc84f7, type: 3}
+  _collectables:
+  - {fileID: 6837215729985843562, guid: aa3150fcfdf67ad49a14f790858efc46, type: 3}
+  - {fileID: 8077281963624919169, guid: 1b38c9f4266a9f9469fdcc84611ce3e3, type: 3}
+  - {fileID: 4824330584451778236, guid: 1616e0dcb89577848b95d8535762d5cf, type: 3}

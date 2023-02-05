@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GGJ23
 {
@@ -24,6 +25,13 @@ namespace GGJ23
         GenerateChunkLoop _generateChunkLoop;
         ColorRoots _colorRoots;
         PropsSpawner _propsSpawner;
+
+        public UnityAction OnWorldReady;
+
+        public Vector3 GetInitialPosition()
+        {
+            return _generateChunkLoop.Meshes[0, 0, 0].transform.position + Vector3.one * _generateChunkLoop.ChunkSize * 0.5f;
+        }
 
         void Start()
         {
@@ -67,6 +75,8 @@ namespace GGJ23
                 // TODO: Spawn roots under (and paint :/)
 
             }
+
+            OnWorldReady.Invoke();
         }
 
         void GetRandomEnvironments(out Environments e1, out Environments e2)

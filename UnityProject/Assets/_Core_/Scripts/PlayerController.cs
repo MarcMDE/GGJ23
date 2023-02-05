@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     Environments _collectableGathered;
     CollectableBehaviour _currentCollidingCollectable;
 
-    public UnityAction OnCollectableRangeEnter;
-    public UnityAction OnCollectableRangeExit;
+    //public UnityAction OnCollectableRangeEnter;
+    //public UnityAction OnCollectableRangeExit;
 
     private void Start()
     {
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             GatherCollectable(_currentCollidingCollectable.Type);
             _currentCollidingCollectable.Gather();
 
-            OnCollectableRangeExit.Invoke();
+            //OnCollectableRangeExit.Invoke();
         }
     }
 
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         // Show message
         // enable gathering
         _currentCollidingCollectable = c;
-        OnCollectableRangeEnter.Invoke();
+        //OnCollectableRangeEnter.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         if (c == _currentCollidingCollectable)
         {
             c = null;
-            OnCollectableRangeExit.Invoke();
+            //OnCollectableRangeExit.Invoke();
         }
     }
 

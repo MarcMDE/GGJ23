@@ -16,7 +16,7 @@ public class CalderoBehaviour : MonoBehaviour
 
     [SerializeField] Transform _worldCanvas;
 
-    bool _playerInZone;
+    bool _playerInZone = false;
 
 
     void Start()
